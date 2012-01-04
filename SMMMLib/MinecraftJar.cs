@@ -20,8 +20,9 @@ namespace SMMMLib
                 m_mods = value;
             }
         }
-        public MinecraftJar() : base("%appdata%\\.minecraft\\bin\\minecraft.jar")
+        public MinecraftJar() : base(Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + "\\.minecraft\\bin\\minecraft.jar")
         {
+            
             Mods = new System.Collections.Generic.List<Mod>();
         }
         public MinecraftJar(string path)
