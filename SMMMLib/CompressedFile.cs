@@ -13,6 +13,13 @@ namespace SMMMLib
         private SevenZipExtractor extractor;
         public DirectoryInfo ExtractedRoot { get; set; }
         public string TempPath { get; set; }
+        public string FilePath
+        {
+            get
+            {
+                return extractor.FileName;
+            }
+        }
         /// <summary>
         /// Creates a compressed file around the given file path
         /// </summary>

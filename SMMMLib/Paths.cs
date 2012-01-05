@@ -6,15 +6,17 @@ using System.IO;
 
 namespace SMMMLib
 {
-    struct Paths
+    public class Paths
     {
-        string minecraftRoot;
-        string binDir;
-        string jarPath;
-        string resourcesDir;
-        string modsDir;
-        string configDir;
-        string tempDir;
+        private static string defaultRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".minecraft");
+        public string minecraftRoot = defaultRoot;
+        public string binDir = defaultRoot + "\\bin";
+        public string jarPath = defaultRoot + "\\bin\\minecraft.jar";
+        public string resourcesDir = defaultRoot + "\\resources";
+        public string modsDir = defaultRoot + "\\mods";
+        public string configDir = defaultRoot + "\\config";
+        public string tempDir = ".\\temp";
+        public string appConfigDir = ".\\config";
         public Paths(string baseDir)
         {
             minecraftRoot = baseDir;
@@ -24,7 +26,12 @@ namespace SMMMLib
             modsDir = baseDir = "\\mods";
             tempDir = ".\\temp";
             configDir = baseDir + "\\config";
+            appConfigDir = ".\\config";
         }
+        public Paths()
+        {
 
+        }
+        
     }
 }

@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="SMMMLib.CompressedFile">
-    <Position X="2" Y="0.5" Width="1.5" />
+    <Position X="5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAACAAAAAAABAgAAAAACCAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAQAAACgAAAAAABAgAAAAAACBAAAAAAAA=</HashCode>
       <FileName>CompressedFile.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SMMMLib.MinecraftJar">
-    <Position X="5" Y="1" Width="1.5" />
+    <Position X="6" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAEAAgAAAAAAAAAAA=</HashCode>
       <FileName>MinecraftJar.cs</FileName>
@@ -18,7 +18,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="SMMMLib.Mod">
-    <Position X="2" Y="4" Width="1.5" />
+    <Position X="3.75" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEEAAAAAAAAAA=</HashCode>
       <FileName>Mod.cs</FileName>
@@ -27,15 +27,8 @@
       <Field Name="m_destination" />
     </ShowAsAssociation>
   </Class>
-  <Struct Name="SMMMLib.Paths" Collapsed="true">
-    <Position X="5" Y="3.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAACAAAAAAAEAAAAAERAAAAAAAEAAAAAAAAAAAAA=</HashCode>
-      <FileName>Paths.cs</FileName>
-    </TypeIdentifier>
-  </Struct>
   <Enum Name="SMMMLib.ModDestinations" Collapsed="true">
-    <Position X="4" Y="4.75" Width="1.5" />
+    <Position X="3.75" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACAAIAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ModDestinations.cs</FileName>
