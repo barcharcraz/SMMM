@@ -55,6 +55,12 @@
     <None Include="DesignDocs.cd" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SMMMUtil\SMMMUtil.csproj">
+      <Project>{5A9A4841-1D0F-4400-B9FD-1808934400AC}</Project>
+      <Name>SMMMUtil</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

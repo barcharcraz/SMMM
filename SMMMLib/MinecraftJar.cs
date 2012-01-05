@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using SMMMUtil;
 
 namespace SMMMLib
 {
@@ -45,9 +46,15 @@ namespace SMMMLib
             }
             foreach (DirectoryInfo info in dirs)
             {
+                FileSystemUtils.CopyDirectory(info.FullName, jarDir.FullName);
                 
-                
-                info.MoveTo(this.ExtractedRoot.FullName);
+            }
+            //delete the meta inf folder
+            //TODO: add a switch so this works with the server jar
+            string metaPath = Path.Combine(jarDir.FullName, "META-INF");
+            if (Directory.Exists(metaPath))
+            {
+                Directory.Delete(metaPath, true);
             }
             this.reCompress();
         }
