@@ -30,6 +30,11 @@ namespace SMMMLib
         {
             Mods = new List<Mod>();
         }
+        /// <summary>
+        /// install mods to minecraft.jar and recompress it
+        /// 
+        /// this does not actually move minecraft.jar back to the .minecraft/bin folder
+        /// </summary>
         public void installMods()
         {
             DirectoryInfo jarDir = this.extractToTemp();
@@ -40,8 +45,11 @@ namespace SMMMLib
             }
             foreach (DirectoryInfo info in dirs)
             {
-                info.MoveTo(jarDir.FullName);
+                
+                
+                info.MoveTo(this.ExtractedRoot.FullName);
             }
+            this.reCompress();
         }
     }
 }

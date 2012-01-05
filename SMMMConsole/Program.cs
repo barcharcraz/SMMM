@@ -17,7 +17,9 @@ namespace SMMMConsole
         {
             jar = new MinecraftJar();
             jar.TempPath = "./Temp";
-            jar.extractToTemp();
+
+            jar.Mods.Add(new Mod("C:\\Users\\Charlie\\Documents\\Visual Studio 2010\\Projects\\SMMM\\SMMMConsole\\bin\\Debug\\minecraftforge-client-1.2.3.zip"));
+            jar.installMods();
         }
     }
 }

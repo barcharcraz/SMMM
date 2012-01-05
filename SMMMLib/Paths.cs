@@ -14,6 +14,7 @@ namespace SMMMLib
         string resourcesDir;
         string modsDir;
         string configDir;
+        string tempDir;
         public Paths(string baseDir)
         {
             minecraftRoot = baseDir;
@@ -21,6 +22,7 @@ namespace SMMMLib
             jarPath = binDir + "\\minecraft.jar";
             resourcesDir = baseDir + "\\resources";
             modsDir = baseDir = "\\mods";
+            tempDir = ".\\temp";
             configDir = baseDir + "\\config";
         }
 
