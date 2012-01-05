@@ -49,6 +49,7 @@ namespace SMMMLib
                 FileSystemUtils.CopyDirectory(info.FullName, jarDir.FullName);
                 
             }
+            
             //delete the meta inf folder
             //TODO: add a switch so this works with the server jar
             string metaPath = Path.Combine(jarDir.FullName, "META-INF");
