@@ -47,6 +47,7 @@
     <Compile Include="CompressedFile.cs" />
     <Compile Include="exceptions\DuplicateItemException.cs" />
     <Compile Include="exceptions\ElementNotFoundException.cs" />
+    <Compile Include="MinecraftInstance.cs" />
     <Compile Include="MinecraftJar.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="ModDestinations.cs" />
