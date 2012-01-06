@@ -6,7 +6,7 @@ using System.IO;
 
 namespace SMMMLib
 {
-    public class Paths
+    public class MinecraftPaths
     {
         private static string defaultRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".minecraft");
         public string minecraftRoot = defaultRoot;
@@ -17,7 +17,7 @@ namespace SMMMLib
         public string configDir = defaultRoot + "\\config";
         public string tempDir = ".\\temp";
         public string appConfigDir = ".\\config";
-        public Paths(string baseDir)
+        public MinecraftPaths(string baseDir)
         {
             minecraftRoot = baseDir;
             binDir = baseDir + "\\bin";
@@ -28,7 +28,7 @@ namespace SMMMLib
             configDir = baseDir + "\\config";
             appConfigDir = ".\\config";
         }
-        public Paths()
+        public MinecraftPaths()
         {
 
         }
