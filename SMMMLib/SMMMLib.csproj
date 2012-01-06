@@ -55,7 +55,6 @@
     <Compile Include="ModConfig.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DesignDocs.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
