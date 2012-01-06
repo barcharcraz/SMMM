@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{10593a7e-3a41-4cbc-9063-e8a1f4d6d626}</ProjectGuid>
+    <ArchitectureToolsVersion>1.0.0.0</ArchitectureToolsVersion>
+    <Name>Overview</Name>
+    <RootNamespace>Overview</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" />
+  <ItemGroup>
+    <Content Include="API.componentdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="API.componentdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>API.componentdiagram</DependentUpon>
+    </Content>
+    <Content Include="UseCase.usecasediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="UseCase.usecasediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>UseCase.usecasediagram</DependentUpon>
+    </Content>
+    <Folder Include="ModelDefinition\" />
+    <Content Include="ModelDefinition\Overview.uml">
+      <SubType>Content</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Validate Include="API.layerdiagram">
+      <SubType>Content</SubType>
+    </Validate>
+    <Validate Include="API.layerdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>API.layerdiagram</DependentUpon>
+    </Validate>
+    <Validate Include="API.layerdiagram.suppressions">
+      <SubType>Content</SubType>
+      <DependentUpon>API.layerdiagram</DependentUpon>
+    </Validate>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SMMMLib\SMMMLib.csproj">
+      <Name>SMMMLib</Name>
+      <Project>{2aa3d320-c47b-494f-85ac-aa28cea22d09}</Project>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

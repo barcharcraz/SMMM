@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMMMConsole", "SMMMConsole\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMMMUtil", "SMMMUtil\SMMMUtil.csproj", "{5A9A4841-1D0F-4400-B9FD-1808934400AC}"
 EndProject
+Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "Overview", "Overview\Overview.modelproj", "{10593A7E-3A41-4CBC-9063-E8A1F4D6D626}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,16 @@ Global
 		{5A9A4841-1D0F-4400-B9FD-1808934400AC}.Release|Mixed Platforms.Build.0 = Release|x86
 		{5A9A4841-1D0F-4400-B9FD-1808934400AC}.Release|x86.ActiveCfg = Release|x86
 		{5A9A4841-1D0F-4400-B9FD-1808934400AC}.Release|x86.Build.0 = Release|x86
+		{10593A7E-3A41-4CBC-9063-E8A1F4D6D626}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10593A7E-3A41-4CBC-9063-E8A1F4D6D626}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10593A7E-3A41-4CBC-9063-E8A1F4D6D626}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{10593A7E-3A41-4CBC-9063-E8A1F4D6D626}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{10593A7E-3A41-4CBC-9063-E8A1F4D6D626}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{10593A7E-3A41-4CBC-9063-E8A1F4D6D626}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10593A7E-3A41-4CBC-9063-E8A1F4D6D626}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10593A7E-3A41-4CBC-9063-E8A1F4D6D626}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{10593A7E-3A41-4CBC-9063-E8A1F4D6D626}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{10593A7E-3A41-4CBC-9063-E8A1F4D6D626}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

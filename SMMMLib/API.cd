@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SMMMLib.CompressedFile" Collapsed="true">
+    <Position X="1.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAACgAAAAAABAgAAAAAACBAAAAAAAA=</HashCode>
+      <FileName>CompressedFile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMMMLib.MinecraftJar" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAEAAgAAAAAAAAAAA=</HashCode>
+      <FileName>MinecraftJar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMMMLib.Mod" Collapsed="true">
+    <Position X="2.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEEAAAAAAAAAA=</HashCode>
+      <FileName>Mod.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMMMLib.ModConfig" Collapsed="true">
+    <Position X="5.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>ModConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMMMLib.Paths" Collapsed="true">
+    <Position X="7" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAEAAAAAEZAAAAAAAEAAAAAAAMAAAAA=</HashCode>
+      <FileName>Paths.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMMMLib.exceptions.DuplicateItemException" Collapsed="true">
+    <Position X="5.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>exceptions\DuplicateItemException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMMMLib.exceptions.ElementNotFoundException" Collapsed="true">
+    <Position X="7" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>exceptions\ElementNotFoundException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="SMMMLib.ModDestinations" Collapsed="true">
+    <Position X="5.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAIAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModDestinations.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
