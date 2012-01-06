@@ -11,14 +11,24 @@ namespace SMMMLib
     public class ModConfig
     {
         private XDocument document;
-        public ModConfig()
+        public ModConfig(MinecraftPaths p)
         {
+
             
-            Paths p = new Paths();
-            document = XDocument.Load(Path.Combine(p.appConfigDir, "config.xml"));
-            
+            if (!File.Exists(Path.Combine(p.appConfigDir, "config.xml")))
+            {
+                XDeclaration dec = new XDeclaration("1.0", "UTF-8", "yes");
+                document = new XDocument();
+                document.Declaration = dec;
+            }
+            else
+            {
+                document = XDocument.Load(Path.Combine(p.appConfigDir, "config.xml"));
+            }
+
 
         }
+        public ModConfig() : this(new MinecraftPaths()) { }
 
         public void addMod(Mod m)
         {
@@ -32,7 +42,7 @@ namespace SMMMLib
         public Mod getMod(string name)
         {
             IEnumerable<XElement> xMod = from c in document.Descendants("Mod")
-                                         where (string)c.Element("Name") == name 
+                                         where (string)c.Element("Name") == name
                                          select c;
             if (xMod.Count() > 1)
             {
@@ -49,7 +59,7 @@ namespace SMMMLib
         }
         public void save()
         {
-            Paths p = new Paths();
+            MinecraftPaths p = new MinecraftPaths();
             document.Save(Path.Combine(p.appConfigDir, "config.xml"));
         }
     }
