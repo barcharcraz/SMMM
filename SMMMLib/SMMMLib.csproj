@@ -56,7 +56,6 @@
     <Compile Include="ModConfig.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="API.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
