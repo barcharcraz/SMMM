@@ -11,7 +11,34 @@ namespace SMMMLib
     {
         private SevenZipCompressor compressor;
         private SevenZipExtractor extractor;
-        public DirectoryInfo ExtractedRoot { get; set; }
+        private DirectoryInfo m_extractedRoot;
+        protected SevenZipExtractor Extractor
+        {
+            get
+            {
+                return extractor;
+            }
+            private set
+            {
+                extractor = value;
+            }
+            
+        }
+        public DirectoryInfo ExtractedRoot
+        {
+            get
+            {
+                if (m_extractedRoot == null)
+                {
+                    extractToTemp();
+                }
+                return m_extractedRoot;
+            }
+            private set
+            {
+                m_extractedRoot = value;
+            }
+        }
         public string TempPath { get; set; }
         public string FilePath
         {
@@ -48,6 +75,7 @@ namespace SMMMLib
             temp.CreateSubdirectory(subdir);
             temp = temp.GetDirectories(subdir)[0];
             extractor.ExtractArchive(temp.FullName);
+            ExtractedRoot = temp;
             return temp;
         }
         /// <summary>

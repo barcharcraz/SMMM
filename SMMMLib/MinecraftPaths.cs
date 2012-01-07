@@ -17,6 +17,7 @@ namespace SMMMLib
         public string configDir = defaultRoot + "\\config";
         public string tempDir = ".\\temp";
         public string appConfigDir = ".\\config";
+        public string appModDir = ".\\Mods";
         public MinecraftPaths(string baseDir)
         {
             minecraftRoot = baseDir;
@@ -27,6 +28,7 @@ namespace SMMMLib
             tempDir = ".\\temp";
             configDir = baseDir + "\\config";
             appConfigDir = ".\\config";
+            appModDir = ".\\Mods";
         }
         public MinecraftPaths()
         {

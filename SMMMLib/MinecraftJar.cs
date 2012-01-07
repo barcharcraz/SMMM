@@ -21,9 +21,10 @@ namespace SMMMLib
                 m_mods = value;
             }
         }
-        public MinecraftJar() : base(Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + "\\.minecraft\\bin\\minecraft.jar")
+        public MinecraftJar()
+            : base(Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + "\\.minecraft\\bin\\minecraft.jar")
         {
-            
+
             Mods = new System.Collections.Generic.List<Mod>();
         }
         public MinecraftJar(string path)
@@ -47,9 +48,9 @@ namespace SMMMLib
             foreach (DirectoryInfo info in dirs)
             {
                 FileSystemUtils.CopyDirectory(info.FullName, jarDir.FullName);
-                
+
             }
-            
+
             //delete the meta inf folder
             //TODO: add a switch so this works with the server jar
             string metaPath = Path.Combine(jarDir.FullName, "META-INF");
@@ -58,6 +59,15 @@ namespace SMMMLib
                 Directory.Delete(metaPath, true);
             }
             this.reCompress();
+        }
+        public void deleteMETAINF()
+        {
+            string metaPath = Path.Combine(ExtractedRoot.FullName, "META-INF");
+            DirectoryInfo mi = new DirectoryInfo(metaPath);
+            if (mi.Exists)
+            {
+                mi.Delete(true);
+            }
         }
     }
 }

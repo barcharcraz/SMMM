@@ -43,7 +43,10 @@ namespace SMMMUtil
                 CopyDirectory(dir.FullName, tempPath);
             }
         }
-
+        public void CopyDirectory(DirectoryInfo source, DirectoryInfo dest)
+        {
+            CopyDirectory(source.FullName, dest.FullName);
+        }
         public static void DeleteDirectory(string dir)
         {
             DirectoryInfo target = new DirectoryInfo(dir);
