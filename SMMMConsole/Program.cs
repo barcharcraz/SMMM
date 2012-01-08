@@ -8,20 +8,60 @@ namespace SMMMConsole
 {
     class Program
     {
-        private MinecraftJar jar;
+        private MinecraftInstance instance;
+
         static void Main(string[] args)
         {
-            new Program();
+            new Program(args);
         }
-        public Program()
+        public Program(string[] args)
         {
-            jar = new MinecraftJar();
-            jar.TempPath = "./Temp";
-            ModConfig mc = new ModConfig();
-            jar.Mods.Add(new Mod("C:\\Users\\Charlie\\Documents\\Visual Studio 2010\\Projects\\SMMM\\SMMMConsole\\bin\\Debug\\minecraftforge-client-1.2.3.zip"));
-            mc.addMod(new Mod("C:\\Users\\Charlie\\Documents\\Visual Studio 2010\\Projects\\SMMM\\SMMMConsole\\bin\\Debug\\minecraftforge-client-1.2.3.zip"));
-            mc.save();
-            jar.installMods();
+            instance = new MinecraftInstance();
+            switch (args[0])
+            {
+                case "list":
+                    listMods();
+                    break;
+                case "set":
+                    switch (args[1])
+                    {
+                        case "id":
+                            int i;
+                            string source = args[2];
+                            if (int.TryParse(source, out i))
+                            {
+                                setID(i, int.Parse(args[3]));
+                            }
+                            else
+                            {
+                                setID(source, int.Parse(args[3]));
+                            }
+                            break;
+                        default:
+                            break;
+                            
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        private void setID(int from, int to)
+        {
+            Mod target = instance.getMod(from);
+            target.ID = to;
+        }
+        private void setID(string from, int to)
+        {
+            Mod target = instance.getMod(from);
+            target.ID = to;
+        }
+        private void listMods()
+        {
+            foreach (Mod m in instance.getInstalledMods())
+            {
+                Console.WriteLine(m.ID + " " + m.Name + " " + m.Destination);
+            }
         }
     }
 }

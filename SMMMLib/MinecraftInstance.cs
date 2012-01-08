@@ -19,9 +19,34 @@ namespace SMMMLib
             m_config = new ModConfig(m_path);
             fsWatcher = new FileSystemWatcher(m_path.appModDir);
             fsWatcher.Changed += new FileSystemEventHandler(fsWatcher_Changed);
+            addAllMods();
             
         }
-
+        private void addAllMods()
+        {
+            DirectoryInfo dir = new DirectoryInfo(m_path.appModDir);
+            FileInfo log = new FileInfo(Path.Combine(m_path.appLogDir, "log.txt"));
+            StreamWriter logout = new StreamWriter(log.FullName);
+            
+            foreach (FileInfo file in dir.GetFiles())
+            {
+                try
+                {
+                    m_config.addMod(new Mod(file, m_config.getNextID()));
+                }
+                catch (exceptions.DuplicateItemException e)
+                {
+                    logout.WriteLine(e);
+                }
+                
+            }
+            logout.Close();
+            m_config.save();
+        }
+        public IEnumerable<Mod> getInstalledMods()
+        {
+            return m_config.getAllMods();
+        }
         void fsWatcher_Changed(object sender, FileSystemEventArgs e)
         {
             switch (e.ChangeType)
@@ -29,10 +54,10 @@ namespace SMMMLib
                 case WatcherChangeTypes.Changed:
                     break;
                 case WatcherChangeTypes.Created:
-                    m_config.addMod(new Mod(e.FullPath));
+                    m_config.addMod(new Mod(e.FullPath, m_config.getNextID()));
                     break;
                 case WatcherChangeTypes.Deleted:
-                    m_config.removeMod(new Mod(e.FullPath));
+                    m_config.removeMod(new Mod(e.FullPath, m_config.getNextID()));
                     break;
                 case WatcherChangeTypes.Renamed:
                     break;
@@ -41,6 +66,14 @@ namespace SMMMLib
             }
             m_config.save();
             
+        }
+        public Mod getMod(int id)
+        {
+            return m_config.getMod(id);
+        }
+        public Mod getMod(string name)
+        {
+            return m_config.getMod(name);
         }
 
         private void install(Mod m)

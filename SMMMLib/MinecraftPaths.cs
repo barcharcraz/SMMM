@@ -10,6 +10,7 @@ namespace SMMMLib
     {
         private static string defaultRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".minecraft");
         public string minecraftRoot = defaultRoot;
+        public string appRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SMMM");
         public string binDir = defaultRoot + "\\bin";
         public string jarPath = defaultRoot + "\\bin\\minecraft.jar";
         public string resourcesDir = defaultRoot + "\\resources";
@@ -18,6 +19,7 @@ namespace SMMMLib
         public string tempDir = ".\\temp";
         public string appConfigDir = ".\\config";
         public string appModDir = ".\\Mods";
+        public string appLogDir;
         public MinecraftPaths(string baseDir)
         {
             minecraftRoot = baseDir;
@@ -25,14 +27,35 @@ namespace SMMMLib
             jarPath = binDir + "\\minecraft.jar";
             resourcesDir = baseDir + "\\resources";
             modsDir = baseDir = "\\mods";
-            tempDir = ".\\temp";
+            tempDir = appRoot+ "\\temp";
             configDir = baseDir + "\\config";
-            appConfigDir = ".\\config";
-            appModDir = ".\\Mods";
+            appConfigDir = appRoot + "\\config";
+            appModDir = appRoot + "\\Mods";
+            appLogDir = appRoot;
+            createDirs();
         }
-        public MinecraftPaths()
+        public MinecraftPaths() : this(defaultRoot)
         {
 
+        }
+        private void createDirs()
+        {
+            if (!Directory.Exists(appRoot))
+            {
+                Directory.CreateDirectory(appRoot);
+            }
+            if (!Directory.Exists(appModDir))
+            {
+                Directory.CreateDirectory(appModDir);
+            }
+            if (!Directory.Exists(appLogDir))
+            {
+                Directory.CreateDirectory(appModDir);
+            }
+            if (!Directory.Exists(appConfigDir))
+            {
+                Directory.CreateDirectory(appConfigDir);
+            }
         }
         
     }
