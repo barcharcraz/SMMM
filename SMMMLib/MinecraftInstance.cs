@@ -20,6 +20,7 @@ namespace SMMMLib
             fsWatcher = new FileSystemWatcher(m_path.appModDir);
             fsWatcher.Changed += new FileSystemEventHandler(fsWatcher_Changed);
             addAllMods();
+            pruneConfig();
             
         }
         private void addAllMods()
@@ -42,6 +43,16 @@ namespace SMMMLib
             }
             logout.Close();
             m_config.save();
+        }
+        private void pruneConfig()
+        {
+            foreach (Mod m in m_config.getAllMods())
+            {
+                if (!(File.Exists(m.FilePath)))
+                {
+                    m_config.removeMod(m);
+                }
+            }
         }
         public IEnumerable<Mod> getInstalledMods()
         {
@@ -75,9 +86,19 @@ namespace SMMMLib
         {
             return m_config.getMod(name);
         }
-
+        public void installAll()
+        {
+            foreach (Mod m in m_config.getAllMods())
+            {
+                foreach (IFSAction act in m.InstallActions)
+                {
+                    act.execute(m_path);
+                }
+            }
+        }
         private void install(Mod m)
         {
+            m.TempPath = m_path.tempDir;
             switch (m.Destination)
             {
                 case ModDestinations.JAR:
@@ -104,8 +125,9 @@ namespace SMMMLib
         }
         private void installToMods(Mod m)
         {
+            
             FileInfo modFile = new FileInfo(m.FilePath);
-            modFile.CopyTo(m_path.modsDir);
+            modFile.CopyTo(Path.Combine(m_path.modsDir,modFile.Name), true);
         }
         private void installToComplex(Mod m)
         {

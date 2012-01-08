@@ -43,6 +43,14 @@ namespace SMMMLib
                     new XElement("Path", m.FilePath),
                     new XElement("ID", m.ID)
                 );
+            XElement installActions = new XElement("InstallActions");
+            foreach (IFSAction act in m.InstallActions)
+            {
+                installActions.Add(new XElement(act.GetType().ToString(),
+                    new XElement("source", act.source),
+                    new XElement("target", act.target)));
+            }
+            modElement.Add(installActions);
             IEnumerable<XElement> modTest = from c in document.Descendants("Mod")
                                             where (string)c.Element("Path") == m.FilePath
                                             select c;

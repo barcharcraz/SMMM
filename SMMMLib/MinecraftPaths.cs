@@ -9,16 +9,16 @@ namespace SMMMLib
     public class MinecraftPaths
     {
         private static string defaultRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".minecraft");
-        public string minecraftRoot = defaultRoot;
+        public string minecraftRoot;
         public string appRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SMMM");
-        public string binDir = defaultRoot + "\\bin";
-        public string jarPath = defaultRoot + "\\bin\\minecraft.jar";
-        public string resourcesDir = defaultRoot + "\\resources";
-        public string modsDir = defaultRoot + "\\mods";
-        public string configDir = defaultRoot + "\\config";
-        public string tempDir = ".\\temp";
-        public string appConfigDir = ".\\config";
-        public string appModDir = ".\\Mods";
+        public string binDir;
+        public string jarPath;
+        public string resourcesDir;
+        public string modsDir;
+        public string configDir;
+        public string tempDir;
+        public string appConfigDir;
+        public string appModDir;
         public string appLogDir;
         public MinecraftPaths(string baseDir)
         {
@@ -26,12 +26,13 @@ namespace SMMMLib
             binDir = baseDir + "\\bin";
             jarPath = binDir + "\\minecraft.jar";
             resourcesDir = baseDir + "\\resources";
-            modsDir = baseDir = "\\mods";
-            tempDir = appRoot+ "\\temp";
+            modsDir = baseDir + "\\mods";
+            tempDir = appRoot + "\\temp";
             configDir = baseDir + "\\config";
             appConfigDir = appRoot + "\\config";
             appModDir = appRoot + "\\Mods";
             appLogDir = appRoot;
+            
             createDirs();
         }
         public MinecraftPaths() : this(defaultRoot)
@@ -57,6 +58,29 @@ namespace SMMMLib
                 Directory.CreateDirectory(appConfigDir);
             }
         }
-        
+        private string resolveDirTag(string dirTag)
+        {
+            switch (dirTag)
+            {
+                
+                case "JAR":
+                    return Path.Combine(tempDir, "minecraft");
+                case "MODS":
+                    return modsDir;
+                
+                default:
+                    return dirTag;
+            }
+        }
+        public string resolvePath(string path)
+        {
+            string[] components = path.Split('/');
+            string retval = "";
+            foreach (string s in components)
+            {
+                retval = Path.Combine(retval, resolveDirTag(s));
+            }
+            return retval;
+        }
     }
 }

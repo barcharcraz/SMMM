@@ -6,6 +6,8 @@ using System.Xml.Linq;
 using System.Collections.ObjectModel;
 using SevenZip;
 using System.Text.RegularExpressions;
+using System.Reflection;
+using System.Reflection.Emit;
 namespace SMMMLib
 {
     /// <summary>
@@ -15,6 +17,8 @@ namespace SMMMLib
     /// </summary>
     public class Mod : CompressedFile
     {
+
+        internal ICollection<IFSAction> InstallActions { get; set; }
         public string Name
         {
             get
@@ -52,12 +56,29 @@ namespace SMMMLib
         {
             Destination = (ModDestinations)Enum.Parse(typeof(ModDestinations), (string)x.Element("Destination"));
             m_id = (int)x.Element("ID");
+            XElement instAct = x.Element("InstallActions");
+            InstallActions = new List<IFSAction>();
+            foreach (XElement xe in instAct.Elements())
+            {
+                Type t = Type.GetType(xe.Name.ToString());
+                Type[] paramTypes = new Type[2];
+                paramTypes[0] = typeof(string);
+                paramTypes[1] = typeof(string);
+                ConstructorInfo ctor = t.GetConstructor(paramTypes);
+                IFSAction act;
+                act = (IFSAction)ctor.Invoke(
+                    new string[]{(string)xe.Element("source"), 
+                        (string)xe.Element("target")});
+                InstallActions.Add(act);
+            }
         }
         public Mod(string f, int id)
             : base(f)
         {
+            InstallActions = new List<IFSAction>();
             Destination = findDestination();
             m_id = id;
+            
 
         }
         public Mod(System.IO.FileInfo f, int id) : this(f.FullName, id) {}
@@ -65,7 +86,7 @@ namespace SMMMLib
         {
             ReadOnlyCollection<ArchiveFileInfo> info;
 
-            info = this.Extractor.ArchiveFileData;
+            info = new SevenZipExtractor(FilePath).ArchiveFileData;
             bool couldBeJAR = false;
             bool couldBeMOD = false;
             Regex builtIn = new Regex(@"^[a-z]{1,3}.class");
@@ -83,10 +104,13 @@ namespace SMMMLib
             }
             if (couldBeJAR)
             {
+                InstallActions.Add(new DirectoryCopyAction(ExtractedRoot.FullName, @"JAR"));
                 return ModDestinations.JAR;
+                
             }
             else if (couldBeMOD)
             {
+                InstallActions.Add(new FileCopyAction(FilePath, @"MODS/NAME"));
                 return ModDestinations.MODS;
             }
             else

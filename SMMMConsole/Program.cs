@@ -42,6 +42,9 @@ namespace SMMMConsole
                             
                     }
                     break;
+                case "install":
+                    instance.installAll();
+                    break;
                 default:
                     break;
             }

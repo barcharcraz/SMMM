@@ -9,21 +9,8 @@ namespace SMMMLib
 {
     public class CompressedFile
     {
-        private SevenZipCompressor compressor;
-        private SevenZipExtractor extractor;
         private DirectoryInfo m_extractedRoot;
-        protected SevenZipExtractor Extractor
-        {
-            get
-            {
-                return extractor;
-            }
-            private set
-            {
-                extractor = value;
-            }
-            
-        }
+
         public DirectoryInfo ExtractedRoot
         {
             get
@@ -40,26 +27,20 @@ namespace SMMMLib
             }
         }
         public string TempPath { get; set; }
-        public string FilePath
-        {
-            get
-            {
-                return extractor.FileName;
-            }
-        }
+        public string FilePath { get; set; }
         /// <summary>
         /// Creates a compressed file around the given file path
         /// </summary>
         /// <param name="f"> the file to wrap </param>
         public CompressedFile(string f)
         {
-            compressor = new SevenZipCompressor();
-            extractor = new SevenZipExtractor(f);
+            FilePath = f;
             TempPath = Environment.CurrentDirectory + Path.DirectorySeparatorChar + "temp";
             
         }
         public DirectoryInfo extractToTemp()
         {
+            SevenZipExtractor extractor = new SevenZipExtractor(FilePath);
             DirectoryInfo temp = new DirectoryInfo(TempPath);
             temp.CreateSubdirectory(Path.GetFileNameWithoutExtension(extractor.FileName));
             temp = temp.GetDirectories(Path.GetFileNameWithoutExtension(extractor.FileName))[0];
@@ -71,6 +52,7 @@ namespace SMMMLib
         }
         public DirectoryInfo extractToTemp(string subdir)
         {
+            SevenZipExtractor extractor = new SevenZipExtractor(FilePath);
             DirectoryInfo temp = new DirectoryInfo(TempPath);
             temp.CreateSubdirectory(subdir);
             temp = temp.GetDirectories(subdir)[0];
@@ -84,6 +66,7 @@ namespace SMMMLib
         /// <param name="fileName">the filename of the new archive</param>
         public void reCompress(string fileName)
         {
+            SevenZipCompressor compressor = new SevenZipCompressor();
             compressor.CompressDirectory(ExtractedRoot.FullName, fileName);
         }
         /// <summary>
@@ -91,6 +74,7 @@ namespace SMMMLib
         /// </summary>
         public void reCompress()
         {
+            SevenZipExtractor extractor = new SevenZipExtractor(FilePath);
             reCompress(TempPath + Path.DirectorySeparatorChar + Path.GetFileName(extractor.FileName));
         }
         
