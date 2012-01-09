@@ -10,7 +10,7 @@ namespace SMMMLib
     public class CompressedFile
     {
         private DirectoryInfo m_extractedRoot;
-
+        internal static string defaultTempDir;
         public DirectoryInfo ExtractedRoot
         {
             get
@@ -35,18 +35,20 @@ namespace SMMMLib
         public CompressedFile(string f)
         {
             FilePath = f;
-            TempPath = Environment.CurrentDirectory + Path.DirectorySeparatorChar + "temp";
+            TempPath = CompressedFile.defaultTempDir;
             
         }
         public DirectoryInfo extractToTemp()
         {
             SevenZipExtractor extractor = new SevenZipExtractor(FilePath);
             DirectoryInfo temp = new DirectoryInfo(TempPath);
-            temp.CreateSubdirectory(Path.GetFileNameWithoutExtension(extractor.FileName));
-            temp = temp.GetDirectories(Path.GetFileNameWithoutExtension(extractor.FileName))[0];
+            temp.CreateSubdirectory(Path.GetFileNameWithoutExtension(
+                Path.GetFileNameWithoutExtension(extractor.FileName)));
+            temp = temp.GetDirectories(Path.GetFileNameWithoutExtension(
+                Path.GetFileNameWithoutExtension(extractor.FileName)))[0];
             
             extractor.ExtractArchive(temp.FullName);
-            ExtractedRoot = temp;
+            m_extractedRoot = temp;
             return temp;
             
         }
@@ -57,7 +59,7 @@ namespace SMMMLib
             temp.CreateSubdirectory(subdir);
             temp = temp.GetDirectories(subdir)[0];
             extractor.ExtractArchive(temp.FullName);
-            ExtractedRoot = temp;
+            m_extractedRoot = temp;
             return temp;
         }
         /// <summary>
@@ -67,6 +69,9 @@ namespace SMMMLib
         public void reCompress(string fileName)
         {
             SevenZipCompressor compressor = new SevenZipCompressor();
+            compressor.CompressionMethod = CompressionMethod.Copy;
+            compressor.ArchiveFormat = OutArchiveFormat.Zip;
+            compressor.CompressionMode = CompressionMode.Create;
             compressor.CompressDirectory(ExtractedRoot.FullName, fileName);
         }
         /// <summary>

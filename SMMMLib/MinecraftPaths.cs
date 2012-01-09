@@ -58,7 +58,7 @@ namespace SMMMLib
                 Directory.CreateDirectory(appConfigDir);
             }
         }
-        private string resolveDirTag(string dirTag)
+        private string resolveDirTag(string dirTag, ICollection<KeyValuePair<string, string>> tags = null)
         {
             switch (dirTag)
             {
@@ -67,18 +67,31 @@ namespace SMMMLib
                     return Path.Combine(tempDir, "minecraft");
                 case "MODS":
                     return modsDir;
+                case "RESOURCES":
+                    return resourcesDir;
                 
                 default:
+                    if (tags != null)
+                    {
+                        foreach (KeyValuePair<string, string> kv in tags)
+                        {
+                            if (dirTag == kv.Key)
+                            {
+                                return kv.Value;
+                            }
+                        }
+                    }
                     return dirTag;
             }
         }
-        public string resolvePath(string path)
+        public string resolvePath(string path, ICollection<KeyValuePair<string,string>> tags = null)
         {
             string[] components = path.Split('/');
             string retval = "";
             foreach (string s in components)
             {
-                retval = Path.Combine(retval, resolveDirTag(s));
+                Console.WriteLine(s);
+                retval = Path.Combine(retval, resolveDirTag(s, tags));
             }
             return retval;
         }

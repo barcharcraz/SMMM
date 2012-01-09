@@ -8,6 +8,7 @@ using SevenZip;
 using System.Text.RegularExpressions;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.IO;
 namespace SMMMLib
 {
     /// <summary>
@@ -17,8 +18,36 @@ namespace SMMMLib
     /// </summary>
     public class Mod : CompressedFile
     {
+        private List<KeyValuePair<string, string>> tags
+        {
+            get
+            {
+                List<KeyValuePair<string, string>> retval = new List<KeyValuePair<string, string>>();
+                retval.Add(new KeyValuePair<string, string>("ZIP", FilePath));
+                retval.Add(new KeyValuePair<string, string>("MODROOT", ExtractedRoot.FullName));
+                retval.Add(new KeyValuePair<string, string>("NAME", Path.GetFileName(FilePath)));
+                return retval;
+            }
+        }
+        
+        private ICollection<IFSAction> m_installActions;
+        public ICollection<IFSAction> InstallActions
+        {
+            get
+            {
+                return m_installActions;
+            }
+            set
+            {
+                for (int i = 0; i < value.Count; i++)
+                {
+                    value.ElementAt(i).ExtraTags = tags;
+                }
+                m_installActions = value;
 
-        internal ICollection<IFSAction> InstallActions { get; set; }
+            }
+        }
+
         public string Name
         {
             get
@@ -61,14 +90,16 @@ namespace SMMMLib
             foreach (XElement xe in instAct.Elements())
             {
                 Type t = Type.GetType(xe.Name.ToString());
-                Type[] paramTypes = new Type[2];
+                Type[] paramTypes = new Type[3];
                 paramTypes[0] = typeof(string);
                 paramTypes[1] = typeof(string);
+                paramTypes[2] = typeof(ICollection<KeyValuePair<string, string>>);
                 ConstructorInfo ctor = t.GetConstructor(paramTypes);
                 IFSAction act;
                 act = (IFSAction)ctor.Invoke(
-                    new string[]{(string)xe.Element("source"), 
-                        (string)xe.Element("target")});
+                    new object[]{(string)xe.Element("source"), 
+                        (string)xe.Element("target"),
+                        tags});
                 InstallActions.Add(act);
             }
         }
@@ -85,7 +116,7 @@ namespace SMMMLib
         private ModDestinations findDestination()
         {
             ReadOnlyCollection<ArchiveFileInfo> info;
-
+            
             info = new SevenZipExtractor(FilePath).ArchiveFileData;
             bool couldBeJAR = false;
             bool couldBeMOD = false;
@@ -104,13 +135,13 @@ namespace SMMMLib
             }
             if (couldBeJAR)
             {
-                InstallActions.Add(new DirectoryCopyAction(ExtractedRoot.FullName, @"JAR"));
+                InstallActions.Add(new DirectoryCopyAction(@"MODROOT", @"JAR", tags));
                 return ModDestinations.JAR;
                 
             }
             else if (couldBeMOD)
             {
-                InstallActions.Add(new FileCopyAction(FilePath, @"MODS/NAME"));
+                InstallActions.Add(new FileCopyAction(@"ZIP", @"MODS/NAME", tags));
                 return ModDestinations.MODS;
             }
             else

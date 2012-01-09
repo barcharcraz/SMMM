@@ -16,6 +16,8 @@ namespace SMMMLib
         {
             m_path = new MinecraftPaths();
             m_jar = new MinecraftJar(m_path.jarPath);
+            m_jar.TempPath = m_path.tempDir;
+            CompressedFile.defaultTempDir = m_path.tempDir;
             m_config = new ModConfig(m_path);
             fsWatcher = new FileSystemWatcher(m_path.appModDir);
             fsWatcher.Changed += new FileSystemEventHandler(fsWatcher_Changed);
@@ -88,6 +90,7 @@ namespace SMMMLib
         }
         public void installAll()
         {
+            m_jar.extractToTemp();
             foreach (Mod m in m_config.getAllMods())
             {
                 foreach (IFSAction act in m.InstallActions)
@@ -95,43 +98,39 @@ namespace SMMMLib
                     act.execute(m_path);
                 }
             }
+            m_jar.installJAR();
         }
-        private void install(Mod m)
+        public void addAction(Mod m, IFSAction action)
         {
-            m.TempPath = m_path.tempDir;
-            switch (m.Destination)
-            {
-                case ModDestinations.JAR:
-                    installToJar(m);
-                    break;
-                case ModDestinations.MODS:
-                    installToMods(m);
-                    break;
-                case ModDestinations.COMPLEX:
-                    installToComplex(m);
-                    break;
-                default:
-                    break;
-            }
+            m.InstallActions.Add(action);
         }
-        private void installToJar(Mod m)
+        public void addDirCopyAction(Mod m, string source, string dest)
         {
-            
-            SMMMUtil.FileSystemUtils.CopyDirectory(
-                m.ExtractedRoot.FullName, 
-                m_jar.ExtractedRoot.FullName
-                );
-            m_jar.deleteMETAINF();
+            DirectoryCopyAction act = new DirectoryCopyAction(source, dest);
+            m.InstallActions.Add(act);
+            m_config.updateMod(m);
         }
-        private void installToMods(Mod m)
+        public void addFileCopyAction(Mod m, string source, string dest)
         {
-            
-            FileInfo modFile = new FileInfo(m.FilePath);
-            modFile.CopyTo(Path.Combine(m_path.modsDir,modFile.Name), true);
+            FileCopyAction act = new FileCopyAction(source, dest);
+            m.InstallActions.Add(act);
+            m_config.updateMod(m);
         }
-        private void installToComplex(Mod m)
+        public void addDirCopyAction(int id, string source, string dest)
         {
-            throw new NotImplementedException();
+            addDirCopyAction(getMod(id), source, dest);
+        }
+        public void addFileCopyAction(int id, string source, string dest)
+        {
+            addFileCopyAction(getMod(id), source, dest);
+        }
+        public void addDirCopyAction(string m, string source, string dest)
+        {
+            addDirCopyAction(getMod(m), source, dest);
+        }
+        public void addFileCopyAction(string m, string source, string dest)
+        {
+            addFileCopyAction(getMod(m), source, dest);
         }
         
         

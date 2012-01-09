@@ -22,15 +22,22 @@ namespace SMMMLib
             }
         }
         public MinecraftJar()
-            : base(Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + "\\.minecraft\\bin\\minecraft.jar")
+            : this(Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + "\\.minecraft\\bin\\minecraft.jar")
         {
 
-            Mods = new System.Collections.Generic.List<Mod>();
+            
         }
         public MinecraftJar(string path)
             : base(path)
         {
             Mods = new List<Mod>();
+            FileInfo jar = new FileInfo(this.FilePath);
+            if (!File.Exists(FilePath + ".orig"))
+            {
+                jar.CopyTo(FilePath + ".orig");
+            }
+            
+
         }
         /// <summary>
         /// install mods to minecraft.jar and recompress it
@@ -68,6 +75,13 @@ namespace SMMMLib
             {
                 mi.Delete(true);
             }
+        }
+        public void installJAR()
+        {
+            FileInfo jar = new FileInfo(FilePath);
+            deleteMETAINF();
+            
+            reCompress(jar.FullName);
         }
     }
 }

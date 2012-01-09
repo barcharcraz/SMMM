@@ -34,7 +34,11 @@ namespace SMMMLib
 
         }
         public ModConfig() : this(new MinecraftPaths()) { }
-
+        public void updateMod(Mod m)
+        {
+            removeMod(m);
+            addMod(m);
+        }
         public void addMod(Mod m)
         {
             XElement modElement = new XElement("Mod",
@@ -60,6 +64,7 @@ namespace SMMMLib
             }
             document.Root.Add(modElement);
             m_numMods++;
+            save();
             
         }
         
@@ -69,6 +74,7 @@ namespace SMMMLib
             XElement xE = getXMod(name);
             Mod retVal = new Mod(xE);
             retVal.IDChanged += IDChangeHandler;
+            retVal.TempPath = paths.tempDir;
             return retVal;
         }
         public Mod getMod(int id)
@@ -77,6 +83,7 @@ namespace SMMMLib
             
             Mod retVal = new Mod(xE);
             retVal.IDChanged += IDChangeHandler;
+            retVal.TempPath = paths.tempDir;
             return retVal;
         }
         private XElement getXMod(int id)
@@ -122,6 +129,7 @@ namespace SMMMLib
             {
                 Mod current = new Mod(x);
                 current.IDChanged += IDChangeHandler;
+                current.TempPath = paths.tempDir;
                 retVal.Add(current);
             }
             return retVal;
@@ -148,17 +156,19 @@ namespace SMMMLib
         }
         public void updateID(Mod m)
         {
+
             XElement xMod = getXMod(m.Name).Element("ID");
-            xMod.Value = m.ID.ToString();
 
             try
             {
+
                 Mod modInID = getMod(m.ID);
                 
                 if (!(modInID.FilePath == m.FilePath))
                 {
                     modInID.ID++;
                 }
+                
             }
             catch (exceptions.ElementNotFoundException e)
             {
@@ -166,7 +176,9 @@ namespace SMMMLib
                 log.WriteLine("mod not found, reached the end of ID update");
                 log.Close();
             }
+            xMod.Value = m.ID.ToString();
             save();
+            
             
             
         }

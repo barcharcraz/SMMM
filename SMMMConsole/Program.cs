@@ -39,7 +39,47 @@ namespace SMMMConsole
                             break;
                         default:
                             break;
-                            
+
+                    }
+                    break;
+                case "add":
+                    switch (args[1])
+                    {
+                        case "action":
+                            switch (args[2])
+                            {
+                                case "dircopy":
+                                    
+                                    string source = args[3];
+                                    int i;
+                                    if (int.TryParse(source, out i))
+                                    {
+                                        instance.addDirCopyAction(i, args[4], args[5]);
+                                    }
+                                    else
+                                    {
+                                        instance.addDirCopyAction(source, args[4], args[5]);
+                                    }
+                                    
+                                    break;
+                                case "fileCopy":
+                                    string sourcef = args[3];
+                                    int ifi;
+                                    if (int.TryParse(sourcef, out ifi))
+                                    {
+                                        instance.addFileCopyAction(ifi, args[4], args[5]);
+                                    }
+                                    else
+                                    {
+                                        instance.addFileCopyAction(sourcef, args[4], args[5]);
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        default:
+                            break;
                     }
                     break;
                 case "install":
