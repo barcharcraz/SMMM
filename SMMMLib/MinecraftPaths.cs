@@ -69,6 +69,10 @@ namespace SMMMLib
                     return modsDir;
                 case "RESOURCES":
                     return resourcesDir;
+                case "MCROOT":
+                    return minecraftRoot;
+                case "BIN":
+                    return binDir;
                 
                 default:
                     if (tags != null)

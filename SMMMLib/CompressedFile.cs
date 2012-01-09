@@ -40,16 +40,29 @@ namespace SMMMLib
         }
         public DirectoryInfo extractToTemp()
         {
-            SevenZipExtractor extractor = new SevenZipExtractor(FilePath);
-            DirectoryInfo temp = new DirectoryInfo(TempPath);
-            temp.CreateSubdirectory(Path.GetFileNameWithoutExtension(
-                Path.GetFileNameWithoutExtension(extractor.FileName)));
-            temp = temp.GetDirectories(Path.GetFileNameWithoutExtension(
-                Path.GetFileNameWithoutExtension(extractor.FileName)))[0];
+            string modRoot;
             
-            extractor.ExtractArchive(temp.FullName);
-            m_extractedRoot = temp;
-            return temp;
+            DirectoryInfo temp = new DirectoryInfo(TempPath);
+            modRoot = Path.Combine(
+                temp.FullName,
+                Path.GetFileNameWithoutExtension(
+                Path.GetFileNameWithoutExtension(
+                FilePath)));
+            DirectoryInfo modRootInfo = new DirectoryInfo(modRoot);
+            if (Directory.Exists(modRoot))
+            {
+                m_extractedRoot = modRootInfo;
+                return modRootInfo;
+            }
+            else
+            {
+
+                SevenZipExtractor extractor = new SevenZipExtractor(FilePath);
+                modRootInfo.Create();
+                extractor.ExtractArchive(modRoot);
+                m_extractedRoot = modRootInfo;
+                return modRootInfo;
+            }
             
         }
         public DirectoryInfo extractToTemp(string subdir)

@@ -19,8 +19,8 @@ namespace SMMMLib
             m_jar.TempPath = m_path.tempDir;
             CompressedFile.defaultTempDir = m_path.tempDir;
             m_config = new ModConfig(m_path);
-            fsWatcher = new FileSystemWatcher(m_path.appModDir);
-            fsWatcher.Changed += new FileSystemEventHandler(fsWatcher_Changed);
+            //fsWatcher = new FileSystemWatcher(m_path.appModDir);
+            //fsWatcher.Changed += new FileSystemEventHandler(fsWatcher_Changed);
             addAllMods();
             pruneConfig();
             
