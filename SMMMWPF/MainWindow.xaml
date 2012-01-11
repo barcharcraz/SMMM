@@ -5,6 +5,11 @@
         Width="525"
         Height="350">
     <DockPanel>
-        <ListBox ItemsSource="{Binding}" />
+        <ToolBarPanel Name="TopBar" DockPanel.Dock="Top">
+            <ToolBar Name="GeneralCommands">
+                <Button Name="addMod">Add Mod</Button>
+            </ToolBar>
+        </ToolBarPanel>
+        <ListBox Name="ModsBox" />
     </DockPanel>
 </Window>
