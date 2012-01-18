@@ -56,6 +56,19 @@ namespace SMMMLib
                 }
             }
         }
+        public void removeMod(Mod m)
+        {
+            DirectoryInfo tempRoot = m.ExtractedRoot;
+            if (m.Destination == ModDestinations.COMPLEX)
+            {
+                foreach (IFSAction act in m.InstallActions)
+                {
+
+                }
+            }
+            tempRoot.Delete(true);
+            
+        }
         public IEnumerable<Mod> getInstalledMods()
         {
             return m_config.getAllMods();
@@ -93,6 +106,7 @@ namespace SMMMLib
             m_jar.extractToTemp();
             foreach (Mod m in m_config.getAllMods())
             {
+                Console.WriteLine(m.Name);
                 foreach (IFSAction act in m.InstallActions)
                 {
                     act.execute(m_path);

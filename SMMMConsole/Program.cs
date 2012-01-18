@@ -91,6 +91,10 @@ namespace SMMMConsole
                         break;
                 }
             }
+            else
+            {
+                instance.installAll();
+            }
         }
         private void setID(int from, int to)
         {

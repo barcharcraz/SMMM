@@ -90,11 +90,12 @@ namespace SMMMLib
         }
         public string resolvePath(string path, ICollection<KeyValuePair<string,string>> tags = null)
         {
+            //Console.WriteLine(Path.GetFileNameWithoutExtension(path));
             string[] components = path.Split('/');
             string retval = "";
             foreach (string s in components)
             {
-                Console.WriteLine(s);
+                //Console.WriteLine(s);
                 retval = Path.Combine(retval, resolveDirTag(s, tags));
             }
             return retval;

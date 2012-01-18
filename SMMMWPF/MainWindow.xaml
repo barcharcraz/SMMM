@@ -1,15 +1,65 @@
 ﻿<Window x:Class="SMMMWPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:l="clr-namespace:SMMMWPF"
         Title="MainWindow"
         Width="525"
-        Height="350">
+        Height="350"
+        Loaded="Window_Loaded">
     <DockPanel>
+        <DockPanel.Resources>
+            <XmlDataProvider x:Key="Config"
+                             Source="C:\Users\Charlie\AppData\Roaming\SMMM\config\config.xml"
+                             XPath="SMMMconfig/Mod" />
+        </DockPanel.Resources>
         <ToolBarPanel Name="TopBar" DockPanel.Dock="Top">
             <ToolBar Name="GeneralCommands">
                 <Button Name="addMod">Add Mod</Button>
+                <Button Name="install" Click="install_Click">Install</Button>
             </ToolBar>
         </ToolBarPanel>
-        <ListBox Name="ModsBox" />
+        <ListView Name="ModsView" ItemsSource="{Binding Source={StaticResource Config}}">
+            <ListView.Resources>
+
+                <l:StringToIntConverter x:Key="Converter" />
+                <l:DestinationTemplateSelector x:Key="DestSelector" />
+                <DataTemplate x:Key="jar">
+                    <TextBlock Background="Red" Text="{Binding XPath=Destination}" />
+                </DataTemplate>
+                <DataTemplate x:Key="mods">
+                    <TextBlock Background="Blue" Text="{Binding XPath=Destination}" />
+                </DataTemplate>
+                <DataTemplate x:Key="complex">
+                    <TextBlock Background="Green" Text="{Binding XPath=Destination}" />
+                </DataTemplate>
+            </ListView.Resources>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="l:SMMMCommands.EditActions" Header="Edit Actions" />
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.CommandBindings>
+                <CommandBinding x:Name="EditActions"
+                                Command="{x:Static l:SMMMCommands.EditActions}"
+                                Executed="EditActions_Executed" />
+            </ListView.CommandBindings>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding XPath=ID, Converter={StaticResource Converter}}">
+                        <GridViewColumnHeader Click="GridViewColumnHeader_Click">ID</GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding XPath=Name}" Header="ModName" />
+                    <GridViewColumn Header="Destination">
+                        <GridViewColumn.CellTemplateSelector>
+                            <l:DestinationTemplateSelector ComplexTemplate="{StaticResource complex}"
+                                                           JarTemplate="{StaticResource jar}"
+                                                           ModsTemplate="{StaticResource mods}" />
+                        </GridViewColumn.CellTemplateSelector>
+                    </GridViewColumn>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+
     </DockPanel>
 </Window>

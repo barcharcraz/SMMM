@@ -11,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel;
+using System.Xml;
 using SMMMLib;
 
 namespace SMMMWPF
@@ -23,20 +25,44 @@ namespace SMMMWPF
     public partial class MainWindow : Window
     {
         MinecraftInstance instance;
-        MinecraftPaths m_paths;
+        //MinecraftPaths m_paths;
+
+
+
         public MainWindow()
         {
-            m_paths = new MinecraftPaths();
-            XmlDataProvider dpro = new XmlDataProvider();
-            Uri furi = new Uri(System.IO.Path.Combine(m_paths.appConfigDir));
-
-            dpro.Source = furi;
             
-            dpro.XPath = "SMMMconfig";
-            Binding bind = new Binding();
-            bind.Source = dpro;
-            ModsBox.SetBinding(ListBox.ItemsSourceProperty, bind);
             InitializeComponent();
+            instance = new MinecraftInstance();
+            
+            
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void install_Click(object sender, RoutedEventArgs e)
+        {
+            instance.installAll();
+        }
+
+        private void GridViewColumnHeader_Click(object sender, RoutedEventArgs e)
+        {
+            ListCollectionView dataView = 
+                CollectionViewSource.GetDefaultView(ModsView.ItemsSource) as ListCollectionView;
+            dataView.CustomSort = new NumericStringSorter();
+            
+            dataView.Refresh();
+        }
+
+        private void EditActions_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            XmlElement xMod = ModsView.SelectedItem as XmlElement;
+            System.Xml.Linq.XElement xlMod = System.Xml.Linq.XElement.Parse(xMod.OuterXml);
+            Mod mod = new Mod(xlMod);
+            new EditActions(mod).ShowDialog();
         }
     }
 }
