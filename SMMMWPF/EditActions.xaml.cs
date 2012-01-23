@@ -20,12 +20,24 @@ namespace SMMMWPF
     public partial class EditActions : Window
     {
         public Mod targetMod{get; set;}
-        public string modName { get; set; }
+
+
+        public string ModName
+        {
+            get { return (string)GetValue(ModNameProperty); }
+            set { SetValue(ModNameProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ModName.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ModNameProperty =
+            DependencyProperty.Register("ModName", typeof(string), typeof(EditActions), new UIPropertyMetadata("ERROR: NO NAME"));
+
+        
         public IEnumerable<IFSAction> Actions { get; set; }
         public EditActions(Mod m)
         {
             targetMod = m;
-            modName = m.Name;
+            ModName = m.Name;
             Actions = m.InstallActions;
             InitializeComponent();
             

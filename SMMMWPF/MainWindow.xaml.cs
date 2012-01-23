@@ -26,18 +26,25 @@ namespace SMMMWPF
     {
         MinecraftInstance instance;
         //MinecraftPaths m_paths;
-
-
+        
 
         public MainWindow()
         {
             
             InitializeComponent();
             instance = new MinecraftInstance();
+            setConfigPath();
             
             
         }
-
+        private void setConfigPath()
+        {
+            XmlDataProvider dp = this.MainView.Resources["Config"] as XmlDataProvider;
+            Uri confuri = new Uri(System.IO.Path.Combine(instance.Paths.appConfigDir, "config.xml"));
+            
+            dp.Source = confuri;
+            
+        }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             

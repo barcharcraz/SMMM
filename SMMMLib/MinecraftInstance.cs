@@ -9,6 +9,13 @@ namespace SMMMLib
     public class MinecraftInstance
     {
         private MinecraftPaths m_path;
+        public MinecraftPaths Paths
+        {
+            get
+            {
+                return m_path;
+            }
+        }
         private MinecraftJar m_jar;
         private ModConfig m_config;
         private FileSystemWatcher fsWatcher;

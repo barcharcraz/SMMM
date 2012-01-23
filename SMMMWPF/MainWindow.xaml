@@ -6,11 +6,11 @@
         Width="525"
         Height="350"
         Loaded="Window_Loaded">
-    <DockPanel>
+    <DockPanel Name="MainView">
         <DockPanel.Resources>
             <XmlDataProvider x:Key="Config"
-                             Source="C:\Users\Charlie\AppData\Roaming\SMMM\config\config.xml"
-                             XPath="SMMMconfig/Mod" />
+                             XPath="SMMMconfig/Mod" 
+                             />
         </DockPanel.Resources>
         <ToolBarPanel Name="TopBar" DockPanel.Dock="Top">
             <ToolBar Name="GeneralCommands">
