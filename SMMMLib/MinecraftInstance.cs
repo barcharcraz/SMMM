@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using SevenZip;
 
 namespace SMMMLib
 {
@@ -19,6 +20,7 @@ namespace SMMMLib
         private MinecraftJar m_jar;
         private ModConfig m_config;
         private FileSystemWatcher fsWatcher;
+        private const string INIT_BAK_NAME = "origBak";
         public MinecraftInstance()
         {
             m_path = new MinecraftPaths();
@@ -28,9 +30,48 @@ namespace SMMMLib
             m_config = new ModConfig(m_path);
             //fsWatcher = new FileSystemWatcher(m_path.appModDir);
             //fsWatcher.Changed += new FileSystemEventHandler(fsWatcher_Changed);
+            InitInstance();
             addAllMods();
             pruneConfig();
             
+        }
+        private void InitInstance()
+        {
+            if (!File.Exists(Path.Combine(Paths.appBakDir, INIT_BAK_NAME + ".bak")))
+            {
+                
+                makeBakup(INIT_BAK_NAME);
+            }
+        }
+        private void makeBakup(string name)
+        {
+            SevenZip.SevenZipCompressor comp = new SevenZipCompressor();
+            //blocking compress, think about putting a progress dialog in later builds, or implement
+            //a system to watch for progress on the minecraft instance
+            comp.CompressDirectory(Paths.minecraftRoot, Path.Combine(Paths.appBakDir, name + ".bak"));
+        }
+        private void RestoreBackup(string name)
+        {
+            SevenZip.SevenZipExtractor ext = new SevenZipExtractor(Path.Combine(Paths.appBakDir, name + ".bak"));
+            DeleteRoot();
+            ext.ExtractArchive(Paths.appRoot);
+        }
+        /// <summary>
+        /// deletes the .minecraft directory(default) or whatever else might be set as the 
+        /// minecraft root directory, not a great thing to call on a regular basis,
+        /// it will make you sad
+        /// </summary>
+        private void DeleteRoot()
+        {
+            Directory.Delete(Paths.appRoot, true);
+        }
+        /// <summary>
+        /// cleans the minecraft install by first deleteing the minecraft root and then
+        /// restoring the original backup
+        /// </summary>
+        public void Clean()
+        {
+            RestoreBackup(INIT_BAK_NAME);
         }
         private void addAllMods()
         {

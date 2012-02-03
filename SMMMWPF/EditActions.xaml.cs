@@ -32,15 +32,32 @@ namespace SMMMWPF
         public static readonly DependencyProperty ModNameProperty =
             DependencyProperty.Register("ModName", typeof(string), typeof(EditActions), new UIPropertyMetadata("ERROR: NO NAME"));
 
-        
-        public IEnumerable<IFSAction> Actions { get; set; }
+        public string ModTempDir { get; set; }
+        public string MinecraftBase { get; set; }
+        public ICollection<IFSAction> Actions { get; set; }
         public EditActions(Mod m)
         {
             targetMod = m;
+            ModTempDir = m.ExtractedRoot.FullName;
+            MinecraftBase = StateProvider.ActiveInstancePaths.minecraftRoot;
             ModName = m.Name;
+            
             Actions = m.InstallActions;
             InitializeComponent();
             
+        }
+
+        private void ActionsDisplay_Drop(object sender, DragEventArgs e)
+        {
+            TextBlock origSource = e.OriginalSource as TextBlock;
+            string target = (origSource.DataContext as FileSystemViewModel).RootName;
+            string source = e.Data.GetData(DataFormats.StringFormat) as string;
+            IFSAction act = ActionFactory.GenerateAction(
+                StateProvider.ActiveInstancePaths,
+                source,
+                target);
+            Console.WriteLine(act);
+            Console.WriteLine(e.OriginalSource);
         }
     }
 }

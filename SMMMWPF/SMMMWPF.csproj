@@ -123,13 +123,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ActionsDisplay.xaml.cs">
+      <DependentUpon>ActionsDisplay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DestinationTemplateSelector.cs" />
+    <Compile Include="DirectoryTree.xaml.cs">
+      <DependentUpon>DirectoryTree.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditActions.xaml.cs">
       <DependentUpon>EditActions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FileSystemViewModel.cs" />
     <Compile Include="NumericStringSorter.cs" />
     <Compile Include="SMMMCommands.cs" />
+    <Compile Include="StateProvider.cs" />
     <Compile Include="StringToIntConverter.cs" />
+    <Page Include="ActionsDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DirectoryTree.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EditActions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

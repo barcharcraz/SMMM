@@ -3,19 +3,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns=""
+        xmlns:l="clr-namespace:SMMMWPF"
         Title="EditActions"
         Width="300"
         Height="300"
         mc:Ignorable="d">
-    <DockPanel>
+    <DockPanel DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=l:EditActions}}">
         <DockPanel.Resources>
-            <
+
         </DockPanel.Resources>
         <TextBlock Name="textBlock1"
                    Height="23"
                    DockPanel.Dock="Top"
-                   Text="{Binding}" />
-        <ListBox ItemsSource="{Binding targetMod.InstallActions}" />
+                   Text="{Binding Path=ModName}" DataContext="{Binding}" />
+        <ListBox DockPanel.Dock="Left" ItemsSource="{Binding Path=targetMod.InstallActions}" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <l:DirectoryTree Grid.Column="0" x:Name="source" Root="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=l:EditActions}, Path=ModTempDir}"></l:DirectoryTree>
+
+            <l:DirectoryTree Grid.Column="1" x:Name="dest" Root="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=l:EditActions}, Path=MinecraftBase}" AllowDrop="true" Drop="ActionsDisplay_Drop"></l:DirectoryTree>
+
+        </Grid>
     </DockPanel>
 </Window>
