@@ -71,5 +71,10 @@ namespace SMMMWPF
             Mod mod = new Mod(xlMod);
             new EditActions(mod).ShowDialog();
         }
+
+        private void Clean_Click(object sender, RoutedEventArgs e)
+        {
+            instance.Clean();
+        }
     }
 }

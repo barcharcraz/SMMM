@@ -9,17 +9,17 @@ namespace SMMMLib
     {
 
         
-        public static IFSAction GenerateAction(MinecraftPaths p, string source, string target)
+        public static IFSAction GenerateAction(MinecraftPaths p, string source, string target, bool compress=true)
         {
             string s = p.resolvePath(source);
             string t = p.resolvePath(target);
             if (Directory.Exists(s))
             {
-                return new DirectoryCopyAction(s,t);
+                return new DirectoryCopyAction(p.CompressPath(s),p.CompressPath(t));
             }
             else if (File.Exists(s))
             {
-                return new FileCopyAction(s, t);
+                return new FileCopyAction(p.CompressPath(s), p.CompressPath(t));
             }
             else
             {

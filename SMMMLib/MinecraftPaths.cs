@@ -121,7 +121,15 @@ namespace SMMMLib
                     return pair.Key;
                 }
             }
-            return CompressPath(Directory.GetParent(path).FullName) + Path.GetFileName(path);
+            if (Directory.GetParent(path) != null)
+            {
+                return CompressPath(Directory.GetParent(path).FullName) + Path.GetFileName(path);
+
+            }
+            else
+            {
+                return path;
+            }
         }
     }
 }
