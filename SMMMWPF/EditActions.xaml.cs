@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SMMMLib;
+using System.Collections.ObjectModel;
 
 namespace SMMMWPF
 {
@@ -19,7 +20,14 @@ namespace SMMMWPF
     /// </summary>
     public partial class EditActions : Window
     {
-        public Mod targetMod{get; set;}
+        public static readonly DependencyProperty targetModProperty =
+            DependencyProperty.Register("targetMod", typeof (Mod), typeof (EditActions), new PropertyMetadata(default(Mod)));
+
+        public Mod targetMod
+        {
+            get { return (Mod) GetValue(targetModProperty); }
+            set { SetValue(targetModProperty, value); }
+        }
 
 
         public string ModName
@@ -34,15 +42,15 @@ namespace SMMMWPF
 
         public string ModTempDir { get; set; }
         public string MinecraftBase { get; set; }
-        public ICollection<IFSAction> Actions { get; set; }
+        public ObservableCollection<IFSAction> Actions { get; set; }
         public EditActions(Mod m)
         {
             targetMod = m;
             ModTempDir = m.ExtractedRoot.FullName;
             MinecraftBase = StateProvider.ActiveInstancePaths.minecraftRoot;
             ModName = m.Name;
+            Actions = new ObservableCollection<IFSAction>(m.InstallActions);
             
-            Actions = m.InstallActions;
             InitializeComponent();
             
         }
@@ -55,7 +63,9 @@ namespace SMMMWPF
             IFSAction act = ActionFactory.GenerateAction(
                 StateProvider.ActiveInstancePaths,
                 source,
-                target);
+                target,targetMod.tags);
+            Actions.Add(act);
+            
             Console.WriteLine(act);
             Console.WriteLine(e.OriginalSource);
         }

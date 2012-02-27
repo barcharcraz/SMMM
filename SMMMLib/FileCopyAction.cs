@@ -6,7 +6,7 @@ using System.IO;
 
 namespace SMMMLib
 {
-    public class FileCopyAction : IFSAction
+    public class FileCopyAction : IFSAction, IReversibleFSAction
     {
         public string source { get; set; }
         public string target { get; set; }
@@ -28,6 +28,12 @@ namespace SMMMLib
         public override string ToString()
         {
             return "COPY FILE FROM " + source + " TO " + target;
+        }
+
+        public void reverse(MinecraftPaths p)
+        {
+            string t = p.resolvePath(target, ExtraTags);
+            File.Delete(t);
         }
     }
 }

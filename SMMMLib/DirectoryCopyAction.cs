@@ -8,9 +8,9 @@ using SevenZip;
 
 namespace SMMMLib
 {
-    public class DirectoryCopyAction : IFSAction
+    public class DirectoryCopyAction : IFSAction, IReversibleFSAction
     {
-        
+
         public string source { get; set; }
         public string target { get; set; }
         public ICollection<KeyValuePair<string, string>> ExtraTags { get; set; }
@@ -37,7 +37,7 @@ namespace SMMMLib
             this.source = source;
             this.target = target;
         }
-        
+
         public DirectoryCopyAction(string source, string target, ICollection<KeyValuePair<string, string>> tags)
             : this(source, target)
         {
@@ -47,6 +47,13 @@ namespace SMMMLib
         {
             return "COPY DIRECTORY FROM " + source + " TO " + target;
         }
-        
+
+        public void reverse(MinecraftPaths p)
+        {
+            string s = p.resolvePath(source);
+            string t = p.resolvePath(target);
+            SMMMUtil.FileSystemUtils.UndoDirectoryCopy(s, t);
+
+        }
     }
 }

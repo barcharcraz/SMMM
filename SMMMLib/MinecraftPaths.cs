@@ -112,8 +112,18 @@ namespace SMMMLib
             }
             return retval;
         }
-        public string CompressPath(string path)
+        public string CompressPath(string path, ICollection<KeyValuePair<string,string>> tags = null )
         {
+            if (tags != null)
+            {
+                foreach (KeyValuePair<string, string> pair in tags)
+                {
+                    if (pair.Value == path)
+                    {
+                        return pair.Key;
+                    }
+                }
+            }
             foreach (KeyValuePair<string, string> pair in DefaultTags)
             {
                 if (pair.Value == path)
@@ -123,11 +133,12 @@ namespace SMMMLib
             }
             if (Directory.GetParent(path) != null)
             {
-                return CompressPath(Directory.GetParent(path).FullName) + Path.GetFileName(path);
+                return Path.Combine(CompressPath(Directory.GetParent(path).FullName,tags), Path.GetFileName(path));
 
             }
             else
             {
+                
                 return path;
             }
         }

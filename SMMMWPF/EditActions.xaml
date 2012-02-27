@@ -16,7 +16,7 @@
                    Height="23"
                    DockPanel.Dock="Top"
                    Text="{Binding Path=ModName}" DataContext="{Binding}" />
-        <ListBox DockPanel.Dock="Left" ItemsSource="{Binding Path=targetMod.InstallActions}" />
+        <ListBox Name="ActionsList" DockPanel.Dock="Left" ItemsSource="{Binding Path=Actions, Mode=OneWay}" />
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>

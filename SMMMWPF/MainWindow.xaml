@@ -46,6 +46,13 @@
             </ListView.CommandBindings>
             <ListView.View>
                 <GridView>
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding XPath=Active, Mode=TwoWay}" Click="save"></CheckBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding XPath=ID, Converter={StaticResource Converter}}">
                         <GridViewColumnHeader Click="GridViewColumnHeader_Click">ID</GridViewColumnHeader>
                     </GridViewColumn>

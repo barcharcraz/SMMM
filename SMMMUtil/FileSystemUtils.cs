@@ -66,7 +66,40 @@ namespace SMMMUtil
                 DeleteDirectory(d.FullName);
             }
             target.Delete();
+
+        }
+        public static void UndoDirectoryCopy(DirectoryInfo source, DirectoryInfo target)
+        {
             
+            FileSystemInfo[] contents = source.GetFileSystemInfos();
+            
+            foreach (FileSystemInfo fs in contents)
+            {
+                if (fs is DirectoryInfo)
+                {
+                    DirectoryInfo dirinfo = fs as DirectoryInfo;
+                    IEnumerable<DirectoryInfo> matchingInTarget = from DirectoryInfo d in target.GetDirectories()
+                                                                  where d.Name == dirinfo.Name
+                                                                  select d;
+                    UndoDirectoryCopy(fs as DirectoryInfo, matchingInTarget.ElementAt(0));
+                }
+                else if (fs is FileInfo)
+                {
+                    FileInfo fi = fs as FileInfo;
+                    IEnumerable<FileInfo> matches = from FileInfo f in target.GetFiles()
+                                                    where f.Name == fi.Name
+                                                    select f;
+                    foreach (FileInfo file in matches)
+                    {
+                        file.Delete();
+                    }
+                }
+            }
+        }
+        public static void UndoDirectoryCopy(string source, string target)
+        {
+            UndoDirectoryCopy(new DirectoryInfo(source), new DirectoryInfo(target) );
         }
     }
+
 }

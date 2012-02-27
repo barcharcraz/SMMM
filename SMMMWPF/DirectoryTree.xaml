@@ -3,11 +3,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:l="clr-namespace:SMMMWPF"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
-  <TreeView ItemsSource="{Binding children}" Name="view">
-            <TreeView.ItemTemplate>
-      <HierarchicalDataTemplate ItemsSource="{Binding children}">
-        <TextBlock Text="{Binding RootFileName}" MouseMove="TextBlock_MouseMove" Drop="TextBlock_Drop"></TextBlock>
-      </HierarchicalDataTemplate>
-    </TreeView.ItemTemplate>
-  </TreeView>
+    <TreeView ItemsSource="{Binding}" Name="view">
+        <TreeViewItem Header="{Binding RootFileName}" MouseMove="TextBlock_MouseMove" Drop="TextBlock_Drop" ItemsSource="{Binding children}" IsExpanded="true">
+            <TreeViewItem.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding children}">
+                    <TextBlock Text="{Binding RootFileName}" MouseMove="TextBlock_MouseMove" Drop="TextBlock_Drop"></TextBlock>
+                </HierarchicalDataTemplate>
+            </TreeViewItem.ItemTemplate>
+        </TreeViewItem>
+    </TreeView>
 </UserControl>

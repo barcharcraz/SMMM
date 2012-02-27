@@ -41,13 +41,16 @@ namespace SMMMWPF
         {
             XmlDataProvider dp = this.MainView.Resources["Config"] as XmlDataProvider;
             Uri confuri = new Uri(System.IO.Path.Combine(instance.Paths.appConfigDir, "config.xml"));
-            
             dp.Source = confuri;
-            
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             
+        }
+        private void save(object sender, RoutedEventArgs e)
+        {
+            XmlDataProvider dp = this.MainView.Resources["Config"] as XmlDataProvider;
+            dp.Document.Save(dp.Source.LocalPath);
         }
 
         private void install_Click(object sender, RoutedEventArgs e)
@@ -76,5 +79,7 @@ namespace SMMMWPF
         {
             instance.Clean();
         }
+
+
     }
 }

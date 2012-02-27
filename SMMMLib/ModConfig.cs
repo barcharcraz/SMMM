@@ -45,7 +45,8 @@ namespace SMMMLib
                     new XElement("Name", Path.GetFileNameWithoutExtension(m.FilePath)),
                     new XElement("Destination", m.Destination),
                     new XElement("Path", m.FilePath),
-                    new XElement("ID", m.ID)
+                    new XElement("ID", m.ID),
+                    new XElement("Active", m.Active)
                 );
             XElement installActions = new XElement("InstallActions");
             foreach (IFSAction act in m.InstallActions)
@@ -121,19 +122,42 @@ namespace SMMMLib
         }
         public IEnumerable<Mod> getAllMods()
         {
-            List<Mod> retVal = new List<Mod>();
             IEnumerable<XElement> modElements = from c in document.Descendants("Mod")
                                                 orderby (int)c.Element("ID")
                                                 select c;
-            foreach (XElement x in modElements)
+            return processXMods(modElements);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// This is not implemented in terms of getAllMods because I 
+        /// want to minimize the linq 
+        /// statements and disk activities
+        /// </remarks>
+        /// <returns></returns>
+        public IEnumerable<Mod> getActiveMods()
+        {
+            IEnumerable<XElement> modElements = from c in document.Descendants("Mod")
+                                                orderby (int) c.Element("ID")
+                                                where (bool) c.Element("Active") == true
+                                                select c;
+            return processXMods(modElements);
+
+
+        } 
+        private List<Mod> processXMods(IEnumerable<XElement> xmods )
+        {
+            List<Mod> retval = new List<Mod>();
+            foreach (XElement x in xmods)
             {
                 Mod current = new Mod(x);
                 current.IDChanged += IDChangeHandler;
                 current.TempPath = paths.tempDir;
-                retVal.Add(current);
+                retval.Add(current);
             }
-            return retVal;
-        }
+            return retval;
+        } 
         public void removeMod(string path)
         {
             IEnumerable<XElement> toDeleteList = from c in document.Descendants("Mod")
@@ -164,7 +188,7 @@ namespace SMMMLib
 
                 Mod modInID = getMod(m.ID);
                 
-                if (!(modInID.FilePath == m.FilePath))
+                if (modInID.FilePath != m.FilePath)
                 {
                     modInID.ID++;
                 }

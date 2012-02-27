@@ -111,7 +111,10 @@ namespace SMMMLib
             {
                 foreach (IFSAction act in m.InstallActions)
                 {
-
+                    if (act is IReversibleFSAction)
+                    {
+                        (act as IReversibleFSAction).reverse(Paths);
+                    }
                 }
             }
             tempRoot.Delete(true);
@@ -152,7 +155,7 @@ namespace SMMMLib
         public void installAll()
         {
             m_jar.extractToTemp();
-            foreach (Mod m in m_config.getAllMods())
+            foreach (Mod m in m_config.getActiveMods())
             {
                 Console.WriteLine(m.Name);
                 foreach (IFSAction act in m.InstallActions)

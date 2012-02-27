@@ -18,7 +18,7 @@ namespace SMMMLib
     /// </summary>
     public class Mod : CompressedFile
     {
-        private List<KeyValuePair<string, string>> tags
+        public List<KeyValuePair<string, string>> tags
         {
             get
             {
@@ -29,7 +29,9 @@ namespace SMMMLib
                 return retval;
             }
         }
-        
+
+        public bool Active { get; set; }
+
         private ICollection<IFSAction> m_installActions;
         public ICollection<IFSAction> InstallActions
         {

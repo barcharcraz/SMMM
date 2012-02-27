@@ -9,17 +9,18 @@ namespace SMMMLib
     {
 
         
-        public static IFSAction GenerateAction(MinecraftPaths p, string source, string target, bool compress=true)
+        public static IFSAction GenerateAction(MinecraftPaths p, string source, string target, ICollection<KeyValuePair<string,string>> extraTags = null,  bool compress=true)
         {
-            string s = p.resolvePath(source);
-            string t = p.resolvePath(target);
+            
+            string s = p.resolvePath(source,extraTags);
+            string t = p.resolvePath(target,extraTags);
             if (Directory.Exists(s))
             {
-                return new DirectoryCopyAction(p.CompressPath(s),p.CompressPath(t));
+                return new DirectoryCopyAction(p.CompressPath(s,extraTags),p.CompressPath(t,extraTags));
             }
             else if (File.Exists(s))
             {
-                return new FileCopyAction(p.CompressPath(s), p.CompressPath(t));
+                return new FileCopyAction(p.CompressPath(s,extraTags), p.CompressPath(t,extraTags));
             }
             else
             {

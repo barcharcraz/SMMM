@@ -21,6 +21,24 @@ namespace SMMMWPF
     {
         public FileSystemViewModel vm { get; set; }
 
+
+        public bool ShowRoot
+        {
+            get { return (bool)GetValue(ShowRootProperty); }
+            set { SetValue(ShowRootProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ShowRoot.  This enables animation, styling, binding, etc...\
+
+        /// <summary>
+        /// Determines weather the root directory of the mod is shown
+        /// 
+        /// </summary>
+        //TODO: implement this
+        public static readonly DependencyProperty ShowRootProperty =
+            DependencyProperty.Register("ShowRoot", typeof(bool), typeof(DirectoryTree), new UIPropertyMetadata(false));
+
+        
         public static readonly DependencyProperty RootProperty =
             DependencyProperty.Register("Root", typeof(string), typeof(DirectoryTree), new PropertyMetadata(default(string), new PropertyChangedCallback(OnRootChanged) ));
 
