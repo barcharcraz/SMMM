@@ -69,5 +69,33 @@ namespace SMMMWPF
             Console.WriteLine(act);
             Console.WriteLine(e.OriginalSource);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            targetMod.InstallActions = Actions;
+            ModConfig conf = new ModConfig(new MinecraftPaths(StateProvider.ActiveInstancePaths.modConfigFile));
+            conf.updateMod(targetMod);
+            conf.save();
+            Close();
+        }
+
+        private void ActionsList_KeyDown(object sender, KeyEventArgs e)
+        {
+            ListBox list = sender as ListBox;
+            switch (e.Key)
+            {
+                case Key.Delete:
+                    List<object> toRemove = new List<object>();
+                    foreach (object sel in list.SelectedItems )
+                    {
+                        toRemove.Add(sel);
+                    }
+                    foreach (object current in toRemove)
+                    {
+                        Actions.Remove(current as IFSAction);
+                    }
+                    break;
+            }
+        }
     }
 }

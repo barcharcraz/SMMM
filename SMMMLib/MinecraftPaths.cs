@@ -10,6 +10,7 @@ namespace SMMMLib
     {
         private static string defaultRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".minecraft");
         public List<KeyValuePair<string, string>> DefaultTags { private set; get; }
+        private List<KeyValuePair<string, string>> CompressTags { get; set; }
         public string minecraftRoot;
         public string appRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SMMM");
         public string binDir;
@@ -19,6 +20,7 @@ namespace SMMMLib
         public string configDir;
         public string tempDir;
         public string appConfigDir;
+        public string modConfigFile;
         public string appModDir;
         public string appLogDir;
         public string appBakDir;
@@ -32,10 +34,11 @@ namespace SMMMLib
             tempDir = appRoot + "\\temp";
             configDir = baseDir + "\\config";
             appConfigDir = appRoot + "\\config";
+            modConfigFile = appConfigDir + "\\config.xml";
             appModDir = appRoot + "\\Mods";
             appBakDir = appRoot + "\\bak";
             appLogDir = appRoot;
-            
+
 
             createDirs();
             InitTags();
@@ -46,6 +49,7 @@ namespace SMMMLib
         {
 
         }
+        #region tagStuff
         private void InitTags()
         {
             DefaultTags = new List<KeyValuePair<string, string>>();
@@ -54,7 +58,25 @@ namespace SMMMLib
             DefaultTags.Add(new KeyValuePair<string, string>("RESOURCES", resourcesDir));
             DefaultTags.Add(new KeyValuePair<string, string>("MCROOT", minecraftRoot));
             DefaultTags.Add(new KeyValuePair<string, string>("BIN", binDir));
+            CompressTags = new List<KeyValuePair<string, string>>();
+            CompressTags = DefaultTags.ToList();
+            modifyTag(CompressTags, "JAR", Path.Combine(binDir, "minecraft.jar"));
+
         }
+        private void modifyTag(List<KeyValuePair<string, string>> input, string tagKey, string newValue)
+        {
+            for (int i = 0; i < input.Count; i++)
+            {
+                KeyValuePair<string, string> kv = input[i];
+                if (kv.Key == tagKey)
+                {
+                    kv = new KeyValuePair<string, string>(tagKey, newValue);
+                    input[i] = kv;
+                }
+            }
+        }
+
+        #endregion
         private void createDirs()
         {
             if (!Directory.Exists(appRoot))
@@ -78,6 +100,7 @@ namespace SMMMLib
                 Directory.CreateDirectory(appBakDir);
             }
         }
+        #region resolve and compress
         private string resolveDirTag(string dirTag, ICollection<KeyValuePair<string, string>> tags = null)
         {
             if (tags != null)
@@ -112,8 +135,9 @@ namespace SMMMLib
             }
             return retval;
         }
-        public string CompressPath(string path, ICollection<KeyValuePair<string,string>> tags = null )
+        public string CompressPath(string path, ICollection<KeyValuePair<string, string>> tags = null)
         {
+            KeyValuePair<string, string> possibleMatch = new KeyValuePair<string, string>("", "");
             if (tags != null)
             {
                 foreach (KeyValuePair<string, string> pair in tags)
@@ -124,23 +148,34 @@ namespace SMMMLib
                     }
                 }
             }
-            foreach (KeyValuePair<string, string> pair in DefaultTags)
+            foreach (KeyValuePair<string, string> pair in CompressTags)
             {
+                //make sure to return the longest tag match, so return JAR and not BIN/minecraft.jar
+                
                 if (pair.Value == path)
                 {
-                    return pair.Key;
+                        if (pair.Value.Length > possibleMatch.Value.Length)
+                        {
+                            possibleMatch = pair;
+                        }
                 }
+
+                
             }
-            if (Directory.GetParent(path) != null)
+            if (possibleMatch.Value != "" && possibleMatch.Key != "")
             {
-                return Path.Combine(CompressPath(Directory.GetParent(path).FullName,tags), Path.GetFileName(path));
+                return possibleMatch.Key;
+            } else if (Directory.GetParent(path) != null)
+            {
+                return Path.Combine(CompressPath(Directory.GetParent(path).FullName, tags), Path.GetFileName(path));
 
             }
             else
             {
-                
+
                 return path;
             }
         }
+        #endregion
     }
 }

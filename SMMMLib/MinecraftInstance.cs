@@ -63,7 +63,7 @@ namespace SMMMLib
         /// </summary>
         private void DeleteRoot()
         {
-            Directory.Delete(Paths.appRoot, true);
+            Directory.Delete(Paths.minecraftRoot, true);
         }
         /// <summary>
         /// cleans the minecraft install by first deleteing the minecraft root and then

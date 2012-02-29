@@ -4,12 +4,19 @@
              xmlns:l="clr-namespace:SMMMWPF"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
     <TreeView ItemsSource="{Binding}" Name="view">
-        <TreeViewItem Header="{Binding RootFileName}" MouseMove="TextBlock_MouseMove" Drop="TextBlock_Drop" ItemsSource="{Binding children}" IsExpanded="true">
-            <TreeViewItem.ItemTemplate>
+        <!--<TreeViewItem Header="{Binding RootFileName}" MouseMove="TextBlock_MouseMove" Drop="TextBlock_Drop" ItemsSource="{Binding children}" IsExpanded="true">-->
+        <TreeViewItem ItemsSource="{Binding children}" IsExpanded="true">
+            <TreeViewItem.Header>
+                <TextBlock Text="{Binding RootFileName}" MouseMove="TextBlock_MouseMove" Drop="TextBlock_Drop"></TextBlock>
+            </TreeViewItem.Header>
+        
+
+        <TreeViewItem.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding children}">
                     <TextBlock Text="{Binding RootFileName}" MouseMove="TextBlock_MouseMove" Drop="TextBlock_Drop"></TextBlock>
                 </HierarchicalDataTemplate>
             </TreeViewItem.ItemTemplate>
         </TreeViewItem>
+
     </TreeView>
 </UserControl>

@@ -55,6 +55,7 @@ namespace SMMMWPF
             //vm = new FileSystemViewModel(@"C:\Program Files (x86)\GOG.com\Freespace 2");
             vm = new FileSystemViewModel();
             DataContext = vm;
+            //InitializeComponent();
             
             
         }
@@ -68,7 +69,7 @@ namespace SMMMWPF
             }
             else
             {
-                //dir.vm.Root = null;
+                dir.vm.Root = null;
             }
             
             dir.InitializeComponent();
@@ -76,13 +77,22 @@ namespace SMMMWPF
 
         private void TextBlock_MouseMove(object sender, MouseEventArgs e)
         {
-            TextBlock block = sender as TextBlock;
-            IEnumerable<string> data =
-                (from FileSystemViewModel v in vm.children where v.RootFileName == block.Text select v.RootName);
-
+            FileSystemViewModel model = (sender as TextBlock).DataContext as FileSystemViewModel;
+            string datString;
+            /*if (vm.RootFileName == block)
+            {
+                datString = vm.RootName;
+            }
+            else
+            {
+                IEnumerable<string> data =
+                    (from FileSystemViewModel v in vm.children where v.RootFileName == block select v.RootName);
+                datString = data.ElementAt(0);
+            }*/
+            datString = model.RootName;
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                DragDrop.DoDragDrop(block, data.ElementAt(0), DragDropEffects.Link);
+                DragDrop.DoDragDrop(sender as TextBlock, datString, DragDropEffects.Link);
             }
         }
 
@@ -91,7 +101,7 @@ namespace SMMMWPF
 
             Console.WriteLine(e.Data.GetData(DataFormats.StringFormat));
             //Console.WriteLine(e.Source);
-            Console.WriteLine(((e.Source as TextBlock).DataContext as FileSystemViewModel).RootName);
+            //Console.WriteLine(((e.Source as ContentPresenter).DataContext as FileSystemViewModel).RootName);
         }
     }
 }
