@@ -18,6 +18,11 @@ namespace SMMMLib
     /// </summary>
     public class Mod : CompressedFile
     {
+
+        /// <summary>
+        /// These are tags that are specific to this mod, things in the mod, that kind of stuff
+        /// Any tag that needs to know about the mod's structure to resolve should go here
+        /// </summary>
         public List<KeyValuePair<string, string>> tags
         {
             get
@@ -29,10 +34,19 @@ namespace SMMMLib
                 return retval;
             }
         }
-
+        /// <summary>
+        /// Weather the mod is active, active mods will get installed the next time install is called
+        /// Inactive mods will not
+        /// </summary>
         public bool Active { get; set; }
 
         private ICollection<IFSAction> m_installActions;
+        /// <summary>
+        /// The actions to take when installing the mod
+        /// SMMM will try and make a guess at what kind of mod you are installing
+        /// and where it should go. However should that fail the user
+        /// can modify these actions himself.
+        /// </summary>
         public ICollection<IFSAction> InstallActions
         {
             get
@@ -49,7 +63,9 @@ namespace SMMMLib
 
             }
         }
-
+        /// <summary>
+        /// the name of the mod
+        /// </summary>
         public string Name
         {
             get
@@ -58,6 +74,9 @@ namespace SMMMLib
             }
         }
         private int m_id;
+        /// <summary>
+        /// the ID of the mod, this determines the order in which mods are installed
+        /// </summary>
         public int ID
         {
             get
@@ -75,6 +94,9 @@ namespace SMMMLib
         /// the destination of the mod
         /// 
         /// This is going to be ether JAR, MODS, or COMPLEX
+        /// 
+        /// COMPLEX indicates that the mod could not be auto-dectected
+        /// and the user will have to manually enter installation actions
         /// </summary>
         public ModDestinations Destination
         {
@@ -159,6 +181,9 @@ namespace SMMMLib
                 IDChanged(this, e);
             }
         }
+        /// <summary>
+        /// Fired whenever the ID of the mod changes
+        /// </summary>
         public event EventHandler IDChanged;
     }
 }

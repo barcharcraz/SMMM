@@ -6,68 +6,75 @@
         Width="525"
         Height="350"
         Loaded="Window_Loaded">
-    <DockPanel Name="MainView">
-        <DockPanel.Resources>
-            <XmlDataProvider x:Key="Config"
+    <TabControl>
+        <TabItem Header="Mod Management">
+            <DockPanel Name="MainView">
+                <DockPanel.Resources>
+                    <XmlDataProvider x:Key="Config"
                              XPath="SMMMconfig/Mod" 
                              />
-        </DockPanel.Resources>
-        <ToolBarPanel Name="TopBar" DockPanel.Dock="Top">
-            <ToolBar Name="GeneralCommands">
-                <Button Name="addMod">Add Mod</Button>
-                <Button Name="install" Click="install_Click">Install</Button>
-                <Button Name="Clean" Click="Clean_Click">Clean</Button>
-            </ToolBar>
-        </ToolBarPanel>
-        <ListView Name="ModsView" ItemsSource="{Binding Source={StaticResource Config}}">
-            <ListView.Resources>
+                </DockPanel.Resources>
+                <ToolBarPanel Name="TopBar" DockPanel.Dock="Top">
+                    <ToolBar Name="GeneralCommands">
+                        <Button Name="addMod">Add Mod</Button>
+                        <Button Name="install" Click="install_Click">Install</Button>
+                        <Button Name="Clean" Click="Clean_Click">Clean</Button>
+                    </ToolBar>
+                </ToolBarPanel>
+                <ListView Name="ModsView" ItemsSource="{Binding Source={StaticResource Config}}">
+                    <ListView.Resources>
 
-                <l:StringToIntConverter x:Key="Converter" />
-                <l:DestinationTemplateSelector x:Key="DestSelector" />
-                <DataTemplate x:Key="jar">
-                    <TextBlock Background="Red" Text="{Binding XPath=Destination}" />
-                </DataTemplate>
-                <DataTemplate x:Key="mods">
-                    <TextBlock Background="Blue" Text="{Binding XPath=Destination}" />
-                </DataTemplate>
-                <DataTemplate x:Key="complex">
-                    <TextBlock Background="Green" Text="{Binding XPath=Destination}" />
-                </DataTemplate>
-            </ListView.Resources>
-            <ListView.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Command="l:SMMMCommands.EditActions" Header="Edit Actions" />
-                </ContextMenu>
-            </ListView.ContextMenu>
-            <ListView.CommandBindings>
-                <CommandBinding x:Name="EditActions"
+                        <l:StringToIntConverter x:Key="Converter" />
+                        <l:DestinationTemplateSelector x:Key="DestSelector" />
+                        <DataTemplate x:Key="jar">
+                            <TextBlock Background="Red" Text="{Binding XPath=Destination}" />
+                        </DataTemplate>
+                        <DataTemplate x:Key="mods">
+                            <TextBlock Background="Blue" Text="{Binding XPath=Destination}" />
+                        </DataTemplate>
+                        <DataTemplate x:Key="complex">
+                            <TextBlock Background="Green" Text="{Binding XPath=Destination}" />
+                        </DataTemplate>
+                    </ListView.Resources>
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Command="l:SMMMCommands.EditActions" Header="Edit Actions" />
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+                    <ListView.CommandBindings>
+                        <CommandBinding x:Name="EditActions"
                                 Command="{x:Static l:SMMMCommands.EditActions}"
                                 Executed="EditActions_Executed" />
-            </ListView.CommandBindings>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn>
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding XPath=Active, Mode=TwoWay}" Click="save"></CheckBox>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding XPath=ID, Converter={StaticResource Converter}}">
-                        <GridViewColumnHeader Click="GridViewColumnHeader_Click">ID</GridViewColumnHeader>
-                    </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding XPath=Name}" Header="ModName" />
-                    <GridViewColumn Header="Destination">
-                        <GridViewColumn.CellTemplateSelector>
-                            <l:DestinationTemplateSelector ComplexTemplate="{StaticResource complex}"
+                    </ListView.CommandBindings>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding XPath=Active, Mode=TwoWay}" Click="save"></CheckBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding XPath=ID, Converter={StaticResource Converter}}">
+                                <GridViewColumnHeader Click="GridViewColumnHeader_Click">ID</GridViewColumnHeader>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding XPath=Name}" Header="ModName" />
+                            <GridViewColumn Header="Destination">
+                                <GridViewColumn.CellTemplateSelector>
+                                    <l:DestinationTemplateSelector ComplexTemplate="{StaticResource complex}"
                                                            JarTemplate="{StaticResource jar}"
                                                            ModsTemplate="{StaticResource mods}" />
-                        </GridViewColumn.CellTemplateSelector>
-                    </GridViewColumn>
+                                </GridViewColumn.CellTemplateSelector>
+                            </GridViewColumn>
 
-                </GridView>
-            </ListView.View>
-        </ListView>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
 
-    </DockPanel>
+            </DockPanel>
+        </TabItem>
+        <TabItem Header="Backups">
+            
+        </TabItem>
+    </TabControl>
 </Window>

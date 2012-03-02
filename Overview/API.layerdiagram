@@ -1,25 +1,2 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="a2d99468-e568-49ad-acb2-9c31d8b481a9" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
-  <layers>
-    <layer Id="1acdf8b0-511e-4e8b-beca-69a24b9736cb" name="SMMMLib">
-      <references>
-        <reference Id="12e7f0db-a8e3-4e8a-9e5f-dd288f8ba000" name="SMMMLib">
-          <ArtifactNode Label="SMMMLib" Category="CodeSchema_Project" Id="(Assembly=&quot;$(PersonalUri)/visual studio 2010/Projects/SMMM/SMMMLib/SMMMLib.csproj&quot;)">
-            <Category Ref="CodeSchema_SourceFile" />
-          </ArtifactNode>
-          <ExpandedNode Id="(Assembly=SMMMLib)" Label="SMMMLib.dll" Category="FileSystem.Category.FileOfType.dll">
-            <LinkCategory Ref="Produces" />
-            <LinkCategory Ref="Represents" />
-          </ExpandedNode>
-        </reference>
-        <reference Id="8f676da2-4641-4bed-8dcd-8587bb7a39ad" name="CompressedFile1">
-          <ArtifactNode Label="CompressedFile" Category="CodeSchema_Class" Id="(Assembly=SMMMLib Namespace=SMMMLib Type=CompressedFile)" />
-          <ExpandedNode Id="(Assembly=SMMMLib Namespace=SMMMLib Type=CompressedFile)" Label="CompressedFile" Category="CodeSchema_Class">
-            <LinkCategory Ref="Contains" />
-            <LinkCategory Ref="Represents" />
-          </ExpandedNode>
-        </reference>
-      </references>
-    </layer>
-  </layers>
-</layerModel>
+<layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="a2d99468-e568-49ad-acb2-9c31d8b481a9" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner" />
