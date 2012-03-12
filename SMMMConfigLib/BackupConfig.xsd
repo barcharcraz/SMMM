@@ -6,7 +6,12 @@
     xmlns:mstns="http://tempuri.org/BackupConfig.xsd"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
 >
-  <xs:element name="Backups">
-    
+  <xs:element name="Backup">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Name" type="xs:string" />
+        <xs:element name="Date" type="xs:date" />
+      </xs:sequence>
+    </xs:complexType>
   </xs:element>
 </xs:schema>

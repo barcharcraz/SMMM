@@ -29,7 +29,7 @@ namespace SMMMLib
             {
                 document = XDocument.Load(Path.Combine(p.appConfigDir, "config.xml"));
             }
-            m_numMods = document.Descendants().Count();
+            m_numMods = document.Elements().ElementAt(0).Elements().Count();
 
 
         }
@@ -172,6 +172,7 @@ namespace SMMMLib
                 throw new exceptions.ElementNotFoundException("that path is not in the XML config file: " + path);
             }
             XElement toDelete = toDeleteList.ElementAt(0);
+            m_numMods--;
             toDelete.Remove();
         }
         public void removeMod(Mod m)

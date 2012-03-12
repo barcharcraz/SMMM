@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="SMMM">
+</Property><Property Name="Solution File" Value="C:\Users\Charlie\Documents\Visual Studio 11\Projects\SMMM\SMMM.sln">
+</Property><Property Name="Date" Value="Friday, March 09, 2012">
+</Property><Property Name="Time" Value="9:11 AM">
+</Property></Properties><Event ErrorLevel="3" Project="" Source="SMMM.sln" Description="SafeUpgrade">
+</Event><Event ErrorLevel="0" Project="" Source="SMMM.sln" Description="File successfully backed up as C:\Users\Charlie\Documents\Visual Studio 11\Projects\SMMM\Backup\SMMM.sln">
+</Event><Event ErrorLevel="3" Project="Overview" Source="Overview\Overview.modelproj" Description="SafeUpgrade">
+</Event><Event ErrorLevel="0" Project="C:\Users\Charlie\Documents\Visual Studio 11\Projects\SMMM\Overview\Overview.modelproj" Source="Overview\Overview.modelproj" Description="Beginning Upgrade">
+</Event><Event ErrorLevel="3" Project="C:\Users\Charlie\Documents\Visual Studio 11\Projects\SMMM\Overview\Overview.modelproj" Source="Overview\Overview.modelproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="SMMM.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="SMMM.sln" Description="Converted">
+</Event></UpgradeLog>

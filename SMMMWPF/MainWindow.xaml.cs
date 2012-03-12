@@ -33,6 +33,7 @@ namespace SMMMWPF
             
             InitializeComponent();
             instance = new MinecraftInstance();
+            ModsView.DataContext = instance;
             setConfigPath();
             
             

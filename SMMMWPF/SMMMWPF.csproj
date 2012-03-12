@@ -134,6 +134,7 @@
       <DependentUpon>EditActions.xaml</DependentUpon>
     </Compile>
     <Compile Include="FileSystemViewModel.cs" />
+    <Compile Include="InstanceViewModel.cs" />
     <Compile Include="NumericStringSorter.cs" />
     <Compile Include="SMMMCommands.cs" />
     <Compile Include="StateProvider.cs" />
