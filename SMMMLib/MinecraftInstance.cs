@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using SevenZip;
+using System.Collections.ObjectModel;
 
 namespace SMMMLib
 {
@@ -17,6 +18,13 @@ namespace SMMMLib
                 return m_path;
             }
         }
+        public ICollection<Mod> AllMods
+        {
+            get
+            {
+                return m_config.getAllMods() as ICollection<Mod>;
+            }
+        }
         private MinecraftJar m_jar;
         private ModConfig m_config;
         private FileSystemWatcher fsWatcher;
@@ -28,11 +36,13 @@ namespace SMMMLib
             m_jar.TempPath = m_path.tempDir;
             CompressedFile.defaultTempDir = m_path.tempDir;
             m_config = new ModConfig(m_path);
+            
             //fsWatcher = new FileSystemWatcher(m_path.appModDir);
             //fsWatcher.Changed += new FileSystemEventHandler(fsWatcher_Changed);
             InitInstance();
             addAllMods();
             pruneConfig();
+            
             
         }
         private void InitInstance()
@@ -120,9 +130,9 @@ namespace SMMMLib
             tempRoot.Delete(true);
             
         }
-        public IEnumerable<Mod> getInstalledMods()
+        public ObservableCollection<Mod> getInstalledMods()
         {
-            return m_config.getAllMods();
+            return new ObservableCollection<Mod>(m_config.getAllMods() as IEnumerable<Mod>);
         }
         void fsWatcher_Changed(object sender, FileSystemEventArgs e)
         {

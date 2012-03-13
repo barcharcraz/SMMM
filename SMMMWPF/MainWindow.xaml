@@ -21,19 +21,19 @@
                         <Button Name="Clean" Click="Clean_Click">Clean</Button>
                     </ToolBar>
                 </ToolBarPanel>
-                <ListView Name="ModsView" ItemsSource="{Binding Source={StaticResource Config}}">
+                <ListView Name="ModsView" ItemsSource="{Binding Path=AllMods}" AllowDrop="True" MouseMove="ModsView_MouseMove" Drop="ModsView_Drop">
                     <ListView.Resources>
 
                         <l:StringToIntConverter x:Key="Converter" />
                         <l:DestinationTemplateSelector x:Key="DestSelector" />
                         <DataTemplate x:Key="jar">
-                            <TextBlock Background="Red" Text="{Binding XPath=Destination}" />
+                            <TextBlock Background="Red" Text="{Binding Path=Destination}" />
                         </DataTemplate>
                         <DataTemplate x:Key="mods">
-                            <TextBlock Background="Blue" Text="{Binding XPath=Destination}" />
+                            <TextBlock Background="Blue" Text="{Binding Path=Destination}" />
                         </DataTemplate>
                         <DataTemplate x:Key="complex">
-                            <TextBlock Background="Green" Text="{Binding XPath=Destination}" />
+                            <TextBlock Background="Green" Text="{Binding Path=Destination}" />
                         </DataTemplate>
                     </ListView.Resources>
                     <ListView.ContextMenu>
@@ -51,14 +51,14 @@
                             <GridViewColumn>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding XPath=Active, Mode=TwoWay}" Click="save"></CheckBox>
+                                        <CheckBox IsChecked="{Binding Path=Active, Mode=TwoWay}" Click="save"></CheckBox>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding XPath=ID, Converter={StaticResource Converter}}">
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=ID}">
                                 <GridViewColumnHeader Click="GridViewColumnHeader_Click">ID</GridViewColumnHeader>
                             </GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding XPath=Name}" Header="ModName" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="ModName" />
                             <GridViewColumn Header="Destination">
                                 <GridViewColumn.CellTemplateSelector>
                                     <l:DestinationTemplateSelector ComplexTemplate="{StaticResource complex}"
@@ -72,9 +72,6 @@
                 </ListView>
 
             </DockPanel>
-        </TabItem>
-        <TabItem Header="Backups">
-            
         </TabItem>
     </TabControl>
 </Window>

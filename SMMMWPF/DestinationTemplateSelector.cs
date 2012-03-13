@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Controls;
 using System.Windows;
 using System.Xml;
+using SMMMLib;
 
 namespace SMMMWPF
 {
@@ -15,15 +16,15 @@ namespace SMMMWPF
         public DataTemplate ComplexTemplate { get; set; }
         public override System.Windows.DataTemplate SelectTemplate(object item, System.Windows.DependencyObject container)
         {
-            XmlElement xitem = item as XmlElement;
-            string dest = xitem.SelectSingleNode("Destination").InnerText;
-            switch (dest)
+            ModDestinations xitem = (item as Mod).Destination;
+            //string dest = xitem.SelectSingleNode("Destination").InnerText;
+            switch (xitem)
             {
-                case "MODS":
+                case ModDestinations.MODS:
                     return ModsTemplate;
-                case "COMPLEX":
+                case ModDestinations.COMPLEX:
                     return ComplexTemplate;
-                case "JAR":
+                case ModDestinations.JAR:
                     return JarTemplate;
                 default:
                     return null;

@@ -30,6 +30,7 @@ namespace SMMMLib
                 document = XDocument.Load(Path.Combine(p.appConfigDir, "config.xml"));
             }
             m_numMods = document.Elements().ElementAt(0).Elements().Count();
+            OnConfigChanged(EventArgs.Empty);
 
 
         }
@@ -215,6 +216,7 @@ namespace SMMMLib
         {
            
             document.Save(Path.Combine(paths.appConfigDir, "config.xml"));
+            OnConfigChanged(EventArgs.Empty);
         }
         public int getNextID()
         {
@@ -222,5 +224,13 @@ namespace SMMMLib
             return retVal;
             
         }
+        protected virtual void OnConfigChanged(EventArgs e)
+        {
+            if (ConfigChanged != null)
+            {
+                ConfigChanged(this, e);
+            }
+        }
+        public event EventHandler ConfigChanged;
     }
 }
