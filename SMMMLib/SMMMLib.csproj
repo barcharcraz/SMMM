@@ -104,6 +104,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="TreeViewEx">
+      <HintPath>..\SMMMWPF\lib\TreeViewEx.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompressedFile.cs" />

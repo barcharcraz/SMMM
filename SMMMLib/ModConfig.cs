@@ -39,6 +39,7 @@ namespace SMMMLib
         {
             removeMod(m);
             addMod(m);
+            
         }
         public void addMod(Mod m)
         {
@@ -154,6 +155,7 @@ namespace SMMMLib
             {
                 Mod current = new Mod(x);
                 current.IDChanged += IDChangeHandler;
+                current.ActiveChanged += ActiveChangeHandler;
                 current.TempPath = paths.tempDir;
                 retval.Add(current);
             }
@@ -211,6 +213,10 @@ namespace SMMMLib
         public void IDChangeHandler(object sender, EventArgs e)
         {
             updateID((Mod)sender);
+        }
+        public void ActiveChangeHandler(object sender, EventArgs e)
+        {
+            updateMod(sender as Mod);
         }
         public void save()
         {

@@ -51,7 +51,7 @@
                             <GridViewColumn>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding Path=Active, Mode=TwoWay}" Click="save"></CheckBox>
+                                        <CheckBox IsChecked="{Binding Path=Active, Mode=TwoWay}"></CheckBox>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>

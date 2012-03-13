@@ -48,11 +48,6 @@ namespace SMMMWPF
         {
 
         }
-        private void save(object sender, RoutedEventArgs e)
-        {
-            XmlDataProvider dp = this.MainView.Resources["Config"] as XmlDataProvider;
-            dp.Document.Save(dp.Source.LocalPath);
-        }
 
         private void install_Click(object sender, RoutedEventArgs e)
         {

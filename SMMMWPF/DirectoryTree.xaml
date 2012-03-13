@@ -2,21 +2,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:l="clr-namespace:SMMMWPF"
+             xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=TreeViewEx"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
-    <TreeView ItemsSource="{Binding}" Name="view">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TreeViewItem}">
+            <Setter Property="Background" Value="Black"></Setter>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="Blue"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Controls:TreeViewEx ItemsSource="{Binding}" Name="view">
+        
         <!--<TreeViewItem Header="{Binding RootFileName}" MouseMove="TextBlock_MouseMove" Drop="TextBlock_Drop" ItemsSource="{Binding children}" IsExpanded="true">-->
         <TreeViewItem ItemsSource="{Binding children}" IsExpanded="true">
             <TreeViewItem.Header>
                 <TextBlock Text="{Binding RootFileName}" MouseMove="TextBlock_MouseMove" Drop="TextBlock_Drop"></TextBlock>
             </TreeViewItem.Header>
-        
 
-        <TreeViewItem.ItemTemplate>
+
+            <TreeViewItem.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding children}">
-                    <TextBlock Text="{Binding RootFileName}" MouseMove="TextBlock_MouseMove" Drop="TextBlock_Drop"></TextBlock>
+                    <TextBlock Text="{Binding RootFileName}" MouseMove="TextBlock_MouseMove" Drop="TextBlock_Drop" DragEnter="TextBlock_DragEnter" DragLeave="TextBlock_DragLeave"></TextBlock>
                 </HierarchicalDataTemplate>
             </TreeViewItem.ItemTemplate>
         </TreeViewItem>
 
-    </TreeView>
+    </Controls:TreeViewEx>
 </UserControl>

@@ -126,13 +126,14 @@ namespace SMMMLib
         public string resolvePath(string path, ICollection<KeyValuePair<string, string>> tags = null)
         {
             //Console.WriteLine(Path.GetFileNameWithoutExtension(path));
-            string[] components = path.Split('/');
-            string retval = "";
+            string[] components = path.Split('/', '\\');
+            string retval ="";
             foreach (string s in components)
             {
                 //Console.WriteLine(s);
                 retval = Path.Combine(retval, resolveDirTag(s, tags));
             }
+            retval = retval.Insert(retval.IndexOf(":")+1, @"\");
             return retval;
         }
         public string CompressPath(string path, ICollection<KeyValuePair<string, string>> tags = null)

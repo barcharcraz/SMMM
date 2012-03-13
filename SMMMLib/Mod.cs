@@ -38,7 +38,20 @@ namespace SMMMLib
         /// Weather the mod is active, active mods will get installed the next time install is called
         /// Inactive mods will not
         /// </summary>
-        public bool Active { get; set; }
+        private bool m_active;
+        public bool Active
+        {
+            get
+            {
+                return m_active;
+            }
+            set
+            {
+                m_active = value;
+                OnActiveChanged(EventArgs.Empty);
+                
+            }
+        }
 
         private ICollection<IFSAction> m_installActions;
         /// <summary>
@@ -109,6 +122,7 @@ namespace SMMMLib
         {
             Destination = (ModDestinations)Enum.Parse(typeof(ModDestinations), (string)x.Element("Destination"));
             m_id = (int)x.Element("ID");
+            m_active = (bool)x.Element("Active");
             XElement instAct = x.Element("InstallActions");
             InstallActions = new List<IFSAction>();
             foreach (XElement xe in instAct.Elements())
@@ -181,9 +195,17 @@ namespace SMMMLib
                 IDChanged(this, e);
             }
         }
+        protected virtual void OnActiveChanged(EventArgs e)
+        {
+            if (ActiveChanged != null)
+            {
+                ActiveChanged(this, e);
+            }
+        }
         /// <summary>
         /// Fired whenever the ID of the mod changes
         /// </summary>
         public event EventHandler IDChanged;
+        public event EventHandler ActiveChanged;
     }
 }

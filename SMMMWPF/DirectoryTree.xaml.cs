@@ -93,6 +93,7 @@ namespace SMMMWPF
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 DragDrop.DoDragDrop(sender as TextBlock, datString, DragDropEffects.Link);
+                
             }
         }
 
@@ -102,6 +103,18 @@ namespace SMMMWPF
             Console.WriteLine(e.Data.GetData(DataFormats.StringFormat));
             //Console.WriteLine(e.Source);
             //Console.WriteLine(((e.Source as ContentPresenter).DataContext as FileSystemViewModel).RootName);
+        }
+
+        private void TextBlock_DragEnter(object sender, DragEventArgs e)
+        {
+            TextBlock send = sender as TextBlock;
+            send.Background = Brushes.Gray;
+        }
+
+        private void TextBlock_DragLeave(object sender, DragEventArgs e)
+        {
+            TextBlock send = sender as TextBlock;
+            send.Background = Brushes.Transparent;
         }
     }
 }

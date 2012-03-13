@@ -20,6 +20,7 @@ namespace SMMMWPF
     /// </summary>
     public partial class EditActions : Window
     {
+        
         public static readonly DependencyProperty targetModProperty =
             DependencyProperty.Register("targetMod", typeof (Mod), typeof (EditActions), new PropertyMetadata(default(Mod)));
 
@@ -57,6 +58,7 @@ namespace SMMMWPF
 
         private void ActionsDisplay_Drop(object sender, DragEventArgs e)
         {
+            
             TextBlock origSource = e.OriginalSource as TextBlock;
             string target = (origSource.DataContext as FileSystemViewModel).RootName;
             string source = e.Data.GetData(DataFormats.StringFormat) as string;
