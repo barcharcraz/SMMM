@@ -83,9 +83,7 @@ namespace SMMMWPF
 
         private void EditActions_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            XmlElement xMod = ModsView.SelectedItem as XmlElement;
-            System.Xml.Linq.XElement xlMod = System.Xml.Linq.XElement.Parse(xMod.OuterXml);
-            Mod mod = new Mod(xlMod);
+            Mod mod = ModsView.SelectedItem as Mod;
             new EditActions(mod).ShowDialog();
         }
 
