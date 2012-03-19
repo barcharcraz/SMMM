@@ -13,7 +13,7 @@ namespace SMMMLib
         public ICollection<KeyValuePair<string, string>> ExtraTags { get; set; }
         public void execute(MinecraftPaths p)
         {
-            File.Copy(p.resolvePath(source, ExtraTags), p.resolvePath(target, ExtraTags),true);
+            File.Copy(p.resolvePath(source, ExtraTags), p.resolvePath(target, ExtraTags), true);
         }
         public FileCopyAction(string source, string target)
         {

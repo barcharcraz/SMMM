@@ -92,7 +92,7 @@ namespace SMMMWPF
             datString = model.RootName;
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                DragDrop.DoDragDrop(sender as TextBlock, datString, DragDropEffects.Link);
+                DragDrop.DoDragDrop(sender as TextBlock, datString, DragDropEffects.Link | DragDropEffects.Copy);
                 
             }
         }

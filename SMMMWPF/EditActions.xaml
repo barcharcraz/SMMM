@@ -7,7 +7,6 @@
         Title="EditActions"
         Width="400"
         Height="600"
-        ResizeMode="NoResize"
         mc:Ignorable="d">
     <DockPanel DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=l:EditActions}}">
         <DockPanel.Resources>

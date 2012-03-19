@@ -60,8 +60,13 @@ namespace SMMMWPF
         {
             
             TextBlock origSource = e.OriginalSource as TextBlock;
+            
             string target = (origSource.DataContext as FileSystemViewModel).RootName;
             string source = e.Data.GetData(DataFormats.StringFormat) as string;
+            if (e.KeyStates == DragDropKeyStates.ControlKey)
+            {
+                target = System.IO.Path.Combine(target, targetMod.Name + ".zip");
+            }
             IFSAction act = ActionFactory.GenerateAction(
                 StateProvider.ActiveInstancePaths,
                 source,

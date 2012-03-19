@@ -12,15 +12,20 @@ namespace SMMMLib
         public static IFSAction GenerateAction(MinecraftPaths p, string source, string target, ICollection<KeyValuePair<string,string>> extraTags = null,  bool compress=true)
         {
             
+            
             string s = p.resolvePath(source,extraTags);
             string t = p.resolvePath(target,extraTags);
-            if (Directory.Exists(s))
+            if (Path.GetExtension(t) == ".zip")
             {
-                return new DirectoryCopyAction(p.CompressPath(s,extraTags),p.CompressPath(t,extraTags));
+                return new DirectoryCompressAction(p.CompressPath(s, extraTags), p.CompressPath(t, extraTags));
+            }
+            else if (Directory.Exists(s))
+            {
+                return new DirectoryCopyAction(p.CompressPath(s, extraTags), p.CompressPath(t, extraTags));
             }
             else if (File.Exists(s))
             {
-                return new FileCopyAction(p.CompressPath(s,extraTags), p.CompressPath(t,extraTags));
+                return new FileCopyAction(p.CompressPath(s, extraTags), Path.Combine(p.CompressPath(t, extraTags), Path.GetFileName(s)));
             }
             else
             {

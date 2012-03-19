@@ -104,13 +104,11 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="TreeViewEx">
-      <HintPath>..\SMMMWPF\lib\TreeViewEx.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompressedFile.cs" />
     <Compile Include="ActionFactory.cs" />
+    <Compile Include="DirectoryCompressAction.cs" />
     <Compile Include="FileCopyAction.cs" />
     <Compile Include="exceptions\DuplicateItemException.cs" />
     <Compile Include="exceptions\ElementNotFoundException.cs" />

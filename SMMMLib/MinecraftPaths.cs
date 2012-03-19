@@ -133,7 +133,11 @@ namespace SMMMLib
                 //Console.WriteLine(s);
                 retval = Path.Combine(retval, resolveDirTag(s, tags));
             }
-            retval = retval.Insert(retval.IndexOf(":")+1, @"\");
+            if (retval.ElementAt(retval.IndexOf(":") + 1) != '\\')
+            {
+                retval = retval.Insert(retval.IndexOf(":")+1, @"\");
+            }
+            
             return retval;
         }
         public string CompressPath(string path, ICollection<KeyValuePair<string, string>> tags = null)

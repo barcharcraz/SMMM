@@ -64,7 +64,7 @@ namespace SMMMLib
         {
             SevenZip.SevenZipExtractor ext = new SevenZipExtractor(Path.Combine(Paths.appBakDir, name + ".bak"));
             DeleteRoot();
-            ext.ExtractArchive(Paths.appRoot);
+            ext.ExtractArchive(Paths.minecraftRoot);
         }
         /// <summary>
         /// deletes the .minecraft directory(default) or whatever else might be set as the 
