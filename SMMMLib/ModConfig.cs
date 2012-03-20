@@ -144,6 +144,7 @@ namespace SMMMLib
                                                 orderby (int) c.Element("ID")
                                                 where (bool) c.Element("Active") == true
                                                 select c;
+            
             return processXMods(modElements);
 
 
