@@ -38,7 +38,7 @@ namespace SMMMLib
             TempPath = CompressedFile.defaultTempDir;
             
         }
-        public DirectoryInfo extractToTemp()
+        public DirectoryInfo extractToTemp(bool force)
         {
             string modRoot;
             
@@ -49,14 +49,14 @@ namespace SMMMLib
                 Path.GetFileNameWithoutExtension(
                 FilePath)));
             DirectoryInfo modRootInfo = new DirectoryInfo(modRoot);
-            if (Directory.Exists(modRoot))
+            if (Directory.Exists(modRoot) && !force)
             {
+
                 m_extractedRoot = modRootInfo;
                 return modRootInfo;
             }
             else
             {
-
                 SevenZipExtractor extractor = new SevenZipExtractor(FilePath);
                 modRootInfo.Create();
                 extractor.ExtractArchive(modRoot);
@@ -64,6 +64,10 @@ namespace SMMMLib
                 return modRootInfo;
             }
             
+        }
+        public DirectoryInfo extractToTemp()
+        {
+            return extractToTemp(false);
         }
         public DirectoryInfo extractToTemp(string subdir)
         {

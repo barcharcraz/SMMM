@@ -164,7 +164,7 @@ namespace SMMMLib
         }
         public void installAll()
         {
-            m_jar.extractToTemp();
+            m_jar.extractToTemp(true);
             foreach (Mod m in m_config.getActiveMods())
             {
                 Console.WriteLine(m.Name);
